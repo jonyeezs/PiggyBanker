@@ -9,7 +9,7 @@ Dir[File.dirname(__FILE__) + '/app/routes/**'].each do |route|
   require route
 end
 
-# Load all modules
-Dir[File.dirname(__FILE__) + '/app/modules/**'].each do |appmodule|
-  require appmodule
+# Load all lib
+Dir[File.dirname(__FILE__) + '/app/lib/**'].each do |lib|
+  require lib
 end
