@@ -6,8 +6,8 @@ def app
   Server
 end
 
-describe "my route" do
-  it "should display hello world on get root" do
+describe 'my route' do
+  it 'should display hello world on get root' do
     get '/'
     last_response.body.must_equal 'Hello, World!'
   end
