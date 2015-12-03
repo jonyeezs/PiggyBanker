@@ -3,4 +3,4 @@ require 'bundler'
 Bundler.require
 
 require './server'
-run Server
+run Server.new
