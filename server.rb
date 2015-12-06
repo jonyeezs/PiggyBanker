@@ -1,19 +1,16 @@
 class Server < Sinatra::Base
   set :root, File.dirname(__FILE__)
-
-  def self.initialize
-    super
-    @version = '0.1'
-  end
-
+  VERSION = '0.1'
   configure do
     # Load up database and such
   end
 
-  # Load all route files
-  Dir[File.dirname(__FILE__) + '/app/routes/**'].each do |route|
-    require route
+  get '/' do
+    { version: VERSION }.to_json
   end
-  # using https://github.com/laser/sinatra-best-practices
-  register PiggyBanker::Routing::Menagerie
+
+  not_found do
+    status 404
+    erb :error
+  end
 end
