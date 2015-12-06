@@ -1,0 +1,7 @@
+# Spec setup taken from http://recipes.sinatrarb.com/p/testing/minitest?#article
+
+require 'rake/testtask'
+
+Rake::TestTask.new do |t|
+  t.pattern = 'spec/*_spec.rb'
+end
