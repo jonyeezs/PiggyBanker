@@ -17,7 +17,7 @@ class Server < Sinatra::Base
   end
 
   get '/' do
-    response_with ruby: RUBY_VERSION, message: 'hello world!'
+    response_with ruby: RUBY_VERSION
   end
 
   not_found do
