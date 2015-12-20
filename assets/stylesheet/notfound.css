@@ -1,0 +1,61 @@
+/* TODO: learn SASS */
+div.title,
+div.container {
+    width: 600px;
+    margin: 0 auto;
+}
+
+div.container {
+    height: 300px;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Droid Serif', serif;
+    font-size: 50px;
+}
+
+div.image-frame {
+    float: left;
+    width: 280px;
+    height: 280px;
+}
+
+img.lostimage {
+    width: 100%;
+    height: auto;
+}
+
+div.story-board {
+    position: absolute;
+    width: 308px;
+    height: inherit;
+    margin-left: 268;
+}
+
+div.intro {
+    margin: 17 26 10 0;
+    font: italic bold 27px 'junglefeverregular', Arial, sans-serif;
+    text-align: right;
+}
+
+div.punchline {
+    margin: 35px 10px;
+    padding: 20px 3px 20px 3px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 16px;
+}
+
+div.suggestion {
+    text-align: justify;
+    clear: left;
+    padding:5 15% 5 15%;
+    border-top:2px solid green;
+}
+
+div.suggestion:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  padding auto 0 auto 0;
+}

@@ -1,13 +1,16 @@
 require 'date'
 
-class Server < Sinatra::Base
+class BaseRouter < Sinatra::Base
   set :root, File.dirname(__FILE__)
+  set :public_folder, settings.root + '/assets'
+
   VERSION = '0.1'
+
   configure do
     # Load up database and such
   end
 
-  def response_with(content = nil)
+  def respond_with(content = nil)
     response = {
       version:   VERSION,
       timestamp: Time.now.to_s
@@ -17,7 +20,7 @@ class Server < Sinatra::Base
   end
 
   get '/' do
-    response_with ruby: RUBY_VERSION
+    respond_with ruby: RUBY_VERSION
   end
 
   not_found do
