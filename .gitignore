@@ -40,3 +40,7 @@ Gemfile.lock
 ## tags
 .tags
 .tags*
+
+
+## don't add your own configs to repo
+*_config.json
