@@ -1,4 +1,4 @@
-require_relative '../lib/Creatures'
+require_relative '../services/Creatures'
 
 class Menagerie < BaseRouter
   some_creatures = Creatures.new
