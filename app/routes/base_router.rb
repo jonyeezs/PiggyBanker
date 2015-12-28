@@ -1,18 +1,12 @@
 require 'date'
 
 class BaseRouter < Sinatra::Base
-  set :root, File.dirname(__FILE__)
-  set :public_folder, settings.root + '/assets'
-
-  VERSION = '0.1'
-
-  configure do
-    # Load up database and such
-  end
+  set :root, PiggyBanker.root
+  set :public_folder, settings.root + PiggyBanker.settings['assetspath']
 
   def respond_with(content = nil)
     response = {
-      version:   VERSION,
+      version:   "#{PiggyBanker.settings['version']}",
       timestamp: Time.now.to_s
     }
     response[:content] = content unless content.nil?
