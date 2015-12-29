@@ -13,6 +13,7 @@ module Budget
 
     def initialize(description, occurance, amount = 0.00)
       @occur_error = 'Wrong occurance. Try ' + occurances.keys.to_sentence
+      @item_error = 'This is not a budget item'
       fail ArgumentError, @occur_error unless occurances.key?(occurance.to_sym)
       @description = description
       @occurance = occurance
@@ -46,6 +47,11 @@ module Budget
       else
         return breakdown_price(occurance_type)
       end
+    end
+
+    def ==(other)
+      fail ArgumentError, @item_error unless other.is_a?(Budget::Item)
+      @description == other.description && @amount == other.amount
     end
 
     private

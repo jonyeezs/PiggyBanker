@@ -52,4 +52,23 @@ describe 'Budget Item' do
     subject.amount_for(:monthly).must_equal 3.00
     subject.amount_for(:yearly).must_equal 36.00
   end
+
+  it 'should use == correctly' do
+    test_1 =  Budget::Item.new 'same same', :monthly, 3
+    test_2 =  Budget::Item.new 'same same', :daily, 3
+    result = test_1 == test_2
+    result.must_equal true
+
+    test_3 = Budget::Item.new 'diff diff', :daily, 3
+    result = test_1 == test_3
+    result.must_equal false
+  end
+
+  it 'should raise exceiption if == uses wrong class' do
+    assert_raises ArgumentError do
+      test_1 = Budget::Item.new 'same same', :monthly, 3
+      test_2 = ['same same', :monthly, 3]
+      test_1 == test_2
+    end
+  end
 end
