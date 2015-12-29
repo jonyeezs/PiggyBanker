@@ -44,4 +44,12 @@ describe 'Budget Item' do
     subject.amount_for(:monthly).must_equal 1.00
     subject.amount_for(:yearly).must_equal 12.00
   end
+
+  it 'should handle display amount for an occurance in the middle' do
+    subject = Budget::Item.new 'jokers to the left..', :monthly, 3
+    subject.amount_for(:daily).must_equal 0.11
+    subject.amount_for(:weekly).must_equal 0.75
+    subject.amount_for(:monthly).must_equal 3.00
+    subject.amount_for(:yearly).must_equal 36.00
+  end
 end
