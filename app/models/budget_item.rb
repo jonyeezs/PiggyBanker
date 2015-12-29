@@ -50,7 +50,7 @@ module Budget
     end
 
     def ==(other)
-      fail ArgumentError, @item_error unless other.is_a?(Budget::Item)
+      fail ArgumentError, @item_error unless other.instance_of?(Budget::Item)
       @description == other.description && @amount == other.amount
     end
 

@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe 'Budget Item' do
+describe Budget::Item do
   it 'should initialize successfully' do
     subject = Budget::Item.new 'test description', :daily
     subject.description.must_equal 'test description'
@@ -23,7 +23,7 @@ describe 'Budget Item' do
   end
 
   it 'should handle credit items' do
-    subject = Budget::Item.new 'debit item', :daily, 9
+    subject = Budget::Item.new 'credit item', :daily, 9
     subject.amount.must_equal 9.00
     subject.debit?.must_equal false
     subject.credit?.must_equal true
