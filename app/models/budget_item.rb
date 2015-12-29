@@ -66,7 +66,6 @@ module Budget
 
     def breakdown_price(till_occurance)
       new_value = @amount.to_f
-      # drop its own value. We don't want to calculate it
       breakdown_array = occurances.keys.take(occurance_index + 1).reverse
       breakdown_array.each do |name|
         break if name == till_occurance
