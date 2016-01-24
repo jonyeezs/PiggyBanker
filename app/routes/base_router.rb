@@ -5,6 +5,7 @@ class BaseRouter < Sinatra::Base
   set :public_folder, settings.root + PiggyBanker.settings['assetspath']
 
   def respond_with(content = nil)
+    content_type :json
     response = {
       version:   "#{PiggyBanker.settings['version']}",
       timestamp: Time.now.to_s
