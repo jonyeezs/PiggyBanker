@@ -5,12 +5,12 @@ module Budget
     attr_accessor :title, :description, :icon
     attr_reader :items
 
-    def initialize(title, description, icon)
+    def initialize(title, description, icon, items = [])
       @error_msg = 'This is not a budget item'
       @title = title
       @description = description
       @icon = icon
-      @items = []
+      @items = items
     end
 
     def add_item(item)
