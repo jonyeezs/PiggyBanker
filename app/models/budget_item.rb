@@ -1,23 +1,30 @@
+# TODO: use price gem
 module Budget
   class Item
-    attr_accessor :description, :occurance, :amount
-    # TODO: use price gem
-    def occurances # values are multiplied in ascending order.
+    attr_accessor :description, :occurance, :category, :amount
+
+    # NOTE: values are an increment of its previous occurance type
+    #       in ascending order
+    def occurances
       {
-        daily:   1,
-        weekly:  7,
-        monthly: 4,
-        yearly:  12
+        daily:       1,
+        weekly:      7,
+        fortnightly: 2,
+        monthly:     2,
+        quarterly:   3,
+        yearly:      4
       }
     end
 
-    def initialize(description, occurance, amount = 0.00)
+    def initialize(params = {})
       @occur_error = 'Wrong occurance. Try ' + occurances.keys.to_sentence
       @item_error = 'This is not a budget item'
-      fail ArgumentError, @occur_error unless occurances.key?(occurance.to_sym)
-      @description = description
-      @occurance = occurance
-      @amount = amount.to_f
+      u_occurance = params.fetch(:occurance, occurances)
+      handle_valid_occurance u_occurance
+      @description = params.fetch(:description, 'no description')
+      @occurance = u_occurance.to_sym
+      @category = params.fetch(:category, 'misc')
+      @amount = params.fetch(:amount, 0.00).to_f
     end
 
     def debit?
@@ -36,10 +43,10 @@ module Budget
       self.credit? ? @amount : 0
     end
 
+    # NOTE: algorithm is done this way so we can add new occurance
+    #       without adding more code
     def amount_for(occurance_type)
-      unless occurances.key?(occurance_type.to_sym)
-        fail ArgumentError, @occur_error
-      end
+      handle_valid_occurance occurance_type
 
       return @amount if occurance_type == @occurance
       if occurance_direction(occurance_type) == :up
@@ -51,7 +58,8 @@ module Budget
 
     def ==(other)
       fail ArgumentError, @item_error unless other.instance_of?(Budget::Item)
-      @description == other.description && @amount == other.amount
+      @description == other.description && @amount == other.amount &&
+        @category == other.category
     end
 
     private
@@ -86,6 +94,10 @@ module Budget
       else
         :down
       end
+    end
+
+    def handle_valid_occurance(occurance)
+      fail ArgumentError, @occur_error unless occurances.key?(occurance.to_sym)
     end
   end
 end
