@@ -2,14 +2,12 @@ require_relative 'budget_item'
 
 module Budget
   class Article
-    attr_accessor :title, :description, :icon
+    attr_accessor :year
     attr_reader :items
 
-    def initialize(title, description, icon, items = [])
+    def initialize(year, items = [])
       @error_msg = 'This is not a budget item'
-      @title = title
-      @description = description
-      @icon = icon
+      @year = year
       @items = items
     end
 

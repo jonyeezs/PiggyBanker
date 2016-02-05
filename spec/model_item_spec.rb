@@ -45,16 +45,16 @@ describe Budget::Item do
                                 amount: 1
     subject.amount_for(:weekly).must_equal 7.00
     subject.amount_for(:monthly).must_equal 28.00
-    subject.amount_for(:yearly).must_equal 336.00
+    subject.amount_for(:annually).must_equal 336.00
   end
 
   it 'should handle display amount for lower occurance' do
-    subject = Budget::Item.new description: 'something', occurance: :yearly,
+    subject = Budget::Item.new description: 'something', occurance: :annually,
                                 amount: 12
     subject.amount_for(:daily).must_equal 0.04
     subject.amount_for(:weekly).must_equal 0.25
     subject.amount_for(:monthly).must_equal 1.00
-    subject.amount_for(:yearly).must_equal 12.00
+    subject.amount_for(:annually).must_equal 12.00
   end
 
   it 'should handle display amount for an occurance in the middle' do
@@ -63,7 +63,7 @@ describe Budget::Item do
     subject.amount_for(:daily).must_equal 0.11
     subject.amount_for(:weekly).must_equal 0.75
     subject.amount_for(:monthly).must_equal 3.00
-    subject.amount_for(:yearly).must_equal 36.00
+    subject.amount_for(:annually).must_equal 36.00
   end
 
   it 'should use == correctly' do

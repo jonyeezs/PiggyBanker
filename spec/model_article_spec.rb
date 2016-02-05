@@ -2,13 +2,11 @@ require_relative 'spec_helper'
 
 describe Budget::Article do
   before do
-    @subject = Budget::Article.new 'Title', 'What about me', 'house.ico'
+    @subject = Budget::Article.new '2016'
   end
 
   it 'should create an article successfully' do
-    @subject.title.must_equal 'Title'
-    @subject.description.must_equal 'What about me'
-    @subject.icon.must_equal 'house.ico'
+    @subject.year.must_equal '2016'
     @subject.items.length.must_equal 0
   end
 

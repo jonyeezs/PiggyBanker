@@ -12,7 +12,8 @@ module Budget
         fortnightly: 2,
         monthly:     2,
         quarterly:   3,
-        yearly:      4
+        semiannual:  2,
+        annually:    2
       }
     end
 
