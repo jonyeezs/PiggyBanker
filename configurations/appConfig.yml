@@ -1,2 +1,4 @@
 version: '0.1'
 assetspath: '/assets'
+googledrive_settings: 'googledrive_config.json'
+spreadsheet_key: '1JCNBDb0-qSk7Un5fBmgO3eo4s2oei6fe0bh-ITYQB-I'
