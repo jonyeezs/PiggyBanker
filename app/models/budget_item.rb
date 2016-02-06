@@ -18,14 +18,18 @@ module Budget
     end
 
     def initialize(params = {})
-      @occur_error = 'Wrong occurance. Try ' + occurances.keys.to_sentence
+      u_occurance = params.fetch(:occurance, :monthly)
+      @occur_error = "Wrong occurance (#{u_occurance}). Try " + occurances.keys.to_sentence
       @item_error = 'This is not a budget item'
-      u_occurance = params.fetch(:occurance, occurances)
       handle_valid_occurance u_occurance
       @description = params.fetch(:description, 'no description')
       @occurance = u_occurance.to_sym
       @category = params.fetch(:category, 'misc')
       @amount = params.fetch(:amount, 0.00).to_f
+    end
+
+    def to_s
+      "#{@description} (Category: #{@category}) #{@amount}, #{@occurance}"
     end
 
     def debit?
