@@ -40,10 +40,10 @@ module Spreadsheet
     def get_incomes(ws)
       incomes = []
       starting_range(ws).each do |row|
+        break if expense_header? ws[row, 1]
         next if income_header? ws[row, 1]
         next if empty_row? ws, row
-        break if expense_header? ws[row, 1]
-        income = map_item ws, row, :income
+        income = map_item ws, row, 1
         incomes.push income
       end
       incomes
@@ -58,8 +58,7 @@ module Spreadsheet
           next
         end
         next if skip || empty_row?(ws, row)
-        puts row
-        expense = map_item ws, row, :expense
+        expense = map_item ws, row, -1
         expenses.push expense
       end
       expenses
@@ -82,16 +81,11 @@ module Spreadsheet
       (1..4).to_a.any? { |col| ws[row, col].empty? }
     end
 
-    def map_item(worksheet, row, type)
+    def map_item(worksheet, row, multiplier)
       title = worksheet[row, 1]
       category = worksheet[row, 2]
       occurance = worksheet[row, 3]
-      if type == :expenses
-        multiplier = -1
-      else
-        multiplier = 1
-      end
-      amount = worksheet[row, 4] * multiplier
+      amount = worksheet[row, 4].to_f * multiplier
       Budget::Item.new description: title,
                        occurance:   occurance.to_sym,
                        amount:      amount,

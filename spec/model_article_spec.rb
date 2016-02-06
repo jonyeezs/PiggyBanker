@@ -11,7 +11,10 @@ describe Budget::Article do
   end
 
   it 'should add items successfully' do
-    test_item = Budget::Item.new description: 'debit item', occurance: :daily, amount: -9, category: 'income'
+    test_item = Budget::Item.new description: 'debit item',
+                                 occurance:   :daily,
+                                 amount:      -9,
+                                 category:    'income'
     @subject.add_item test_item
     result = @subject.items
     result.length.must_equal 1
