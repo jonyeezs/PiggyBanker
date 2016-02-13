@@ -3,9 +3,11 @@ require_relative 'spec_helper'
 describe Budget::Item do
   it 'should initialize successfully' do
     subject = Budget::Item.new description: 'test description',
-                               occurance: :daily
+                               occurance:   :daily,
+                               id:          5
     subject.description.must_equal 'test description'
-    subject.occurance.must_equal :daily
+    subject.occurance.must_equal :i
+    subject.id.must_equal 5
     subject.amount.must_equal 0.00
   end
 

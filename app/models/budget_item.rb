@@ -1,7 +1,7 @@
 # TODO: use price gem
 module Budget
   class Item
-    attr_accessor :description, :occurance, :category, :amount
+    attr_accessor :id, :description, :occurance, :category, :amount
 
     # NOTE: values are an increment of its previous occurance type
     #       in ascending order
@@ -22,6 +22,7 @@ module Budget
       @occur_error = "Wrong occurance (#{u_occurance}). Try " + occurances.keys.to_sentence
       @item_error = 'This is not a budget item'
       handle_valid_occurance u_occurance
+      @id = params.fetch(:id)
       @description = params.fetch(:description, 'no description')
       @occurance = u_occurance.to_sym
       @category = params.fetch(:category, 'misc')

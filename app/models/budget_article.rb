@@ -16,18 +16,18 @@ module Budget
       @items.push(item)
     end
 
-    def remove_item(to_del)
-      @items.delete_at(get_index(to_del))
+    def remove_item(id)
+      @items.delete_at(get_index(id))
     end
 
-    def update_item(old, updated)
-      @items[get_index(old)] = updated
+    def update_item(updated)
+      @items[get_index(updated)] = updated
     end
 
     private
 
-    def get_index(target)
-      @items.index { |item| item == target }
+    def get_index(id)
+      @items.index { |item| item.id == id }
     end
   end
 end
