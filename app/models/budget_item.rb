@@ -1,8 +1,8 @@
 # TODO: use price gem
 module Budget
   class Item
-    attr_accessor :id, :description, :occurance, :category, :amount
-
+    attr_accessor :description, :occurance, :category, :amount
+    attr_reader :id
     # NOTE: values are an increment of its previous occurance type
     #       in ascending order
     def occurances
@@ -65,7 +65,7 @@ module Budget
     def ==(other)
       fail ArgumentError, @item_error unless other.instance_of?(Budget::Item)
       @description == other.description && @amount == other.amount &&
-        @category == other.category
+        @id == other.id && @category == other.category
     end
 
     private
