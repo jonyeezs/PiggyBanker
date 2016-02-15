@@ -15,6 +15,7 @@ gem 'openssl'
 # end
 
 group :test do
+  gem 'mocha'
   gem 'rake', require: 'rake/testtask'
   gem 'rack-test', require: 'rack/test'
 end

@@ -2,12 +2,12 @@ require 'openssl'
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
 require 'google/api_client'
 require 'google_drive'
+require_relative 'worksheetmapper.rb' # TODO: must be a better way to include this 
 
 # TODO: figure out how to make constants
-# TODO: write spec
 module Spreadsheet
   class Adapter
-    include Budget
+    include Budget, WorksheetMapper
 
     def initialize(spreadsheet_key = nil)
       @nil_key_msg = 'Nil key provided'
@@ -22,74 +22,32 @@ module Spreadsheet
       @spreadsheet = @session.spreadsheet_by_key(spreadsheet_key)
     end
 
+    def spreadsheet_available?
+      !@spreadsheet.nil?
+    end
+
     def budgets
-      budgets = @spreadsheet.worksheets.select { |ws| !ws.title.downcase.include? 'actual' }
+      budgets = worksheets_with_title('budget')
       budgets.map! do |ws|
-        Budget::Article.new ws.title, get_items(ws)
+        year = year_from_title(ws.title)
+        Budget::Article.new year, get_items(ws)
       end
     end
 
     private
 
+    def worksheets_with_title(title)
+      @spreadsheet.worksheets.select { |ws| ws.title.downcase.include? title }
+    end
+
+    def year_from_title(title)
+      title.downcase.delete! %w(budget actual)
+    end
+
     def get_items(ws)
-      incomes = get_incomes ws
-      expenses = get_expenses ws
+      incomes = WorksheetMapper.map_incomes ws
+      expenses = WorksheetMapper.map_expenses ws
       incomes + expenses
-    end
-
-    def get_incomes(ws)
-      incomes = []
-      starting_range(ws).each do |row|
-        break if expense_header? ws[row, 1]
-        next if income_header? ws[row, 1]
-        next if empty_row? ws, row
-        income = map_item ws, row, 1
-        incomes.push income
-      end
-      incomes
-    end
-
-    def get_expenses(ws)
-      expenses = []
-      skip = true # skip till we get expenses
-      starting_range(ws).each do |row|
-        if expense_header? ws[row, 1]
-          skip = false
-          next
-        end
-        next if skip || empty_row?(ws, row)
-        expense = map_item ws, row, -1
-        expenses.push expense
-      end
-      expenses
-    end
-
-    def starting_range(worksheet)
-      # first 5 lines are heaaders
-      (6..worksheet.num_rows)
-    end
-
-    def income_header?(header)
-      header.downcase.eql? 'income'
-    end
-
-    def expense_header?(header)
-      header.downcase.eql? 'expenses'
-    end
-
-    def empty_row?(ws, row)
-      (1..4).to_a.any? { |col| ws[row, col].empty? }
-    end
-
-    def map_item(worksheet, row, multiplier)
-      title = worksheet[row, 1]
-      category = worksheet[row, 2]
-      occurance = worksheet[row, 3]
-      amount = worksheet[row, 4].to_f * multiplier
-      Budget::Item.new description: title,
-                       occurance:   occurance.to_sym,
-                       amount:      amount,
-                       category:    category
     end
   end
 end
