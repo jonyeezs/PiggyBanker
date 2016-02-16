@@ -1,33 +1,32 @@
 module WorksheetMapper
-  class ExpenseMapper
-    def map(worksheet)
-      expenses = []
-      skip = true # skip till we get expenses
-      starting_range(worksheet).each do |row|
-        if expense_header? worksheet[row, 1]
-          skip = false
-          next
-        end
-        next if skip || empty_row?(worksheet, row)
-        expense = map_item worksheet, row, -1
-        expenses.push expense
+
+  # FIXME: how to change this into a class?
+  def self.map_expenses(worksheet)
+    expenses = []
+    skip = true # skip till we get expenses
+    starting_range(worksheet).each do |row|
+      if expense_header? worksheet[row, 1]
+        skip = false
+        next
       end
-      expenses
+      next if skip || broken_row?(worksheet, row)
+      expense = map_item worksheet, row, -1
+      expenses.push expense
     end
+    expenses
   end
 
-  class IncomeMapper
-    def map(worksheet)
-      incomes = []
-      starting_range(worksheet).each do |row|
-        break if expense_header? worksheet[row, 1]
-        next if income_header? worksheet[row, 1]
-        next if empty_row? worksheet, row
-        income = map_item worksheet, row, 1
-        incomes.push income
-      end
-      incomes
+  # FIXME: how to change this into a class?
+  def self.map_incomes(worksheet)
+    incomes = []
+    starting_range(worksheet).each do |row|
+      break if expense_header? worksheet[row, 1]
+      next if income_header? worksheet[row, 1]
+      next if broken_row? worksheet, row
+      income = map_item worksheet, row, 1
+      incomes.push income
     end
+    incomes
   end
 
   # TODO: have the common definitions into an includable module
@@ -45,12 +44,9 @@ module WorksheetMapper
     header.downcase.eql? 'expenses'
   end
 
-  def self.empty_row?(ws, row)
-    (1..4).to_a.any? do |col|
-       puts ws[row, col]
-       puts ws[row, col].empty?
-       puts '------------'
-     end
+  # row with empty cells
+  def self.broken_row?(ws, row)
+    [1, 2, 3, 4].any? { |col| ws[row, col].strip.empty? }
   end
 
   def self.map_item(worksheet, row, multiplier)
