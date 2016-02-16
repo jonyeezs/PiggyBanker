@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-class FakeWorksheet # Implementation simplified from GoogleDrive::Worksheet
+class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet
   attr_writer :rows_count
   def initialize
     @cells = {}
@@ -27,7 +27,7 @@ end
 
 describe WorksheetMapper do
   before do
-    @worksheet = FakeWorksheet.new
+    @worksheet = MockWorksheet.new
     @num_of_incomes = 1
     @num_of_expenses = 3
     @worksheet[0] = %w(should ignore #1)
