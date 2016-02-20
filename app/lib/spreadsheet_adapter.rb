@@ -2,12 +2,12 @@ require 'openssl'
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
 require 'google/api_client'
 require 'google_drive'
-require_relative 'worksheetmapper.rb' # TODO: must be a better way to include this 
+require_relative 'worksheetmapper.rb' # TODO: must be a better way to include this
 
 # TODO: figure out how to make constants
 module Spreadsheet
   class Adapter
-    include Budget, WorksheetMapper
+    include WorksheetMapper
 
     def initialize(spreadsheet_key = nil)
       @nil_key_msg = 'Nil key provided'
@@ -29,8 +29,7 @@ module Spreadsheet
     def budgets
       budgets = worksheets_with_title('budget')
       budgets.map! do |ws|
-        year = year_from_title(ws.title)
-        Budget::Article.new year, get_items(ws)
+        WorksheetMapper::Article.map ws
       end
     end
 
@@ -38,16 +37,6 @@ module Spreadsheet
 
     def worksheets_with_title(title)
       @spreadsheet.worksheets.select { |ws| ws.title.downcase.include? title }
-    end
-
-    def year_from_title(title)
-      title.downcase.delete! %w(budget actual)
-    end
-
-    def get_items(ws)
-      incomes = WorksheetMapper.map_incomes ws
-      expenses = WorksheetMapper.map_expenses ws
-      incomes + expenses
     end
   end
 end
