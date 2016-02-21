@@ -27,7 +27,7 @@ module Spreadsheet
     def budgets
       budgets = worksheets_with_title('budget')
       budgets.map! do |ws|
-        WorksheetMapper::Article.map ws
+        WorksheetMapper.map_article ws
       end
     end
 

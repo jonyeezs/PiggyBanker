@@ -14,27 +14,32 @@ end
 
 # Some Helper mock classes you can use
 class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet
-  attr_writer :rows_count
+  attr_accessor :title
   def initialize
     @cells = {}
+    @title = 'fake file'
   end
-
   def num_rows
-    @rows_count
+    @cells.length
   end
-
   def [](*args)
     row = args[0]
     col = args[1]
     @cells[[row, col]] || ''
   end
-
   def []=(*args)
     row = args[0]
     values = args[-1]
     values.each_index do |i|
       @cells[[row, i + 1]] = values[i]
     end
+  end
+end
+
+class MockSpreadSheet
+  attr_accessor :worksheets
+  def initialize(worksheets)
+    @worksheets = worksheets
   end
 end
 

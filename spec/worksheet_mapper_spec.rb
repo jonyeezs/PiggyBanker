@@ -17,7 +17,6 @@ describe 'WorksheetMapper' do
     @worksheet[9] = ['Grocery', 'Food', 'weekly', '23.50']
     @worksheet[10] =  ['Internet', 'bill', 'monthly', '60.50']
     @worksheet[11] =  ['Movies', 'leisure', 'monthly', '40.70']
-    @worksheet.rows_count = 12
     @subject = SubjectFactory.new.with_module(WorksheetMapper)
   end
 
