@@ -12,7 +12,6 @@ Dir[File.expand_path('..') + '/app/**/*.rb'].each do |file|
   require file
 end
 
-
 # Some Helper mock classes you can use
 class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet
   attr_writer :rows_count

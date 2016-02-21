@@ -10,15 +10,13 @@ module Spreadsheet
     include WorksheetMapper
 
     def initialize(spreadsheet_key = nil)
-      @nil_key_msg = 'Nil key provided'
       # config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
       config_path = 'C:/Development/PiggyBanker/configurations/googledrive_config.json'
       @session = GoogleDrive.saved_session(config_path)
-      load_spreadsheet(spreadsheet_key)
+      load_spreadsheet(spreadsheet_key) unless spreadsheet_key.nil?
     end
 
     def load_spreadsheet(spreadsheet_key)
-      fail ArgumentError, @nil_key_msg if spreadsheet_key.nil?
       @spreadsheet = @session.spreadsheet_by_key(spreadsheet_key)
     end
 
