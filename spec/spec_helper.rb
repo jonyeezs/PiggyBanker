@@ -19,14 +19,17 @@ class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet
     @cells = {}
     @title = 'fake file'
   end
+
   def num_rows
     @cells.length
   end
+
   def [](*args)
     row = args[0]
     col = args[1]
     @cells[[row, col]] || ''
   end
+
   def []=(*args)
     row = args[0]
     values = args[-1]
