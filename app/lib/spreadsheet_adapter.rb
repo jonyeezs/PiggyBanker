@@ -1,7 +1,4 @@
-require 'openssl'
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
-require 'google/api_client'
-require 'google_drive'
 require_relative 'worksheetmapper.rb' # TODO: must be a better way to include this
 
 # TODO: figure out how to make constants

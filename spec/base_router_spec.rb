@@ -1,6 +1,5 @@
 require_relative 'spec_helper'
-require 'tilt/erb'
-require 'json'
+require 'tilt/erb' # tilt autoloading in a non thread-safe way
 
 include Rack::Test::Methods
 
