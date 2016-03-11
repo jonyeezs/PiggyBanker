@@ -9,7 +9,7 @@ class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet
   attr_accessor :title
   def initialize
     @cells = {}
-    @title = 'fake file'
+    @title = 'budget 1984'
   end
 
   def num_rows

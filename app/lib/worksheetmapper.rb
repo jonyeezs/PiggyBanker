@@ -65,7 +65,7 @@ module WorksheetMapper
   # for mapping worksheets to article
   def map_article(worksheet)
     year = year_from_title worksheet.title
-    Model::Budget::Article.new year, get_items(ws)
+    Model::Budget::Article.new year, get_items(worksheet)
   end
 
   def year_from_title(title)

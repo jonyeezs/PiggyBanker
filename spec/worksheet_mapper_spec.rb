@@ -75,6 +75,12 @@ describe 'WorksheetMapper' do
   end
 
   describe 'Article' do
+    it 'should map article' do
+      result_model_budget_article = @subject.map_article @worksheet
+      result_model_budget_article.year.must_be_kind_of String
+      assert result_model_budget_article.items.length > 1
+    end
+
     it 'should return the year for a budget title' do
       @subject.year_from_title('2016 Budget').must_equal '2016'
       @subject.year_from_title('BUDGET 2020').must_equal '2020'
