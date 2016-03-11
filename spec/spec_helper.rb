@@ -39,9 +39,9 @@ class MockSpreadSheet
 end
 
 class SubjectFactory
-  def with_module(include_module)
+  def include_module(moduleName)
     container = Class.new do
-      include include_module
+      include moduleName
     end
     container.new
   end
