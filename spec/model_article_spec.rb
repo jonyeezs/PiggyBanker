@@ -1,4 +1,6 @@
 require_relative 'spec_helper'
+require 'budget_article'
+require 'budget_item'
 
 describe Budget::Article do
   before do

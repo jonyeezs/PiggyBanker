@@ -4,10 +4,6 @@ Bundler.require :default, :test
 
 require_relative '../server'
 
-Dir['app/**/*.rb'].each do |file| # TODO: This looks weird. something to do with the rakefile in root?
-  require_relative File.join('..', file)
-end
-
 # Some Helper mock classes you can use
 class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet
   attr_accessor :title

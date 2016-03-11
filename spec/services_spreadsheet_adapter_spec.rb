@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+require 'spreadsheet_adapter'
 
 describe Spreadsheet::Adapter do
   before do

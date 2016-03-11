@@ -1,5 +1,6 @@
 require_relative 'spec_helper'
 require 'tilt/erb' # tilt autoloading in a non thread-safe way
+require 'base_router'
 
 include Rack::Test::Methods
 

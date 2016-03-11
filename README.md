@@ -10,13 +10,15 @@ This will be an educational experiment for me to learn Ruby and at the same time
 
 ## What's involved
 
-This is a ruby API service using sinatra.
+This is a ruby API service using Sinatra the base.
 
 
 ## Starting the endpoint service
 
-On root just type `rackup`
+Sinatra just sits on top of rack. So why not utilize its simple startup process; thus the use of config.ru.
+
+simple type `rackup`
 
 ## Run spec test
 
-On root just type `rake test`
+Command is `rake test`

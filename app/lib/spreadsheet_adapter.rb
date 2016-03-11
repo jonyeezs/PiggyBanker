@@ -1,5 +1,5 @@
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
-require_relative 'worksheetmapper.rb' # TODO: must be a better way to include this
+require 'worksheetmapper' # TODO: must be a better way to include this
 
 # TODO: figure out how to make constants
 module Spreadsheet

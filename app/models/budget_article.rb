@@ -1,4 +1,4 @@
-require_relative 'budget_item'
+require 'budget_item'
 
 module Budget
   class Article

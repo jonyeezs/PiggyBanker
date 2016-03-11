@@ -1,3 +1,6 @@
+require 'budget_article'
+require 'budget_item'
+
 module WorksheetMapper
   # TODO: Find out how to break these into nested modules (or classes)
   def starting_range(worksheet)
