@@ -3,6 +3,8 @@ require 'budget_item'
 
 module WorksheetMapper
   include Model
+
+  # COMMON methods
   # TODO: Find out how to break these into nested modules (or classes)
   def starting_range(worksheet)
     (6..worksheet.num_rows) # first 5 lines are heaaders

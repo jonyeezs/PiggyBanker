@@ -16,7 +16,7 @@ describe Spreadsheet::Adapter do
     other_budget_worksheet = MockWorksheet.new
     other_budget_worksheet.title = 'BUDGET 2017 with more text'
     @worksheets.push(other_budget_worksheet)
-    WorksheetMapper.stubs(:map_article)
+    WorksheetMapper.stubs(:map_article).returns('someobject')
     @spreadsheet = MockSpreadSheet.new @worksheets
   end
 

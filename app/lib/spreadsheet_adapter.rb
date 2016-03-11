@@ -1,11 +1,10 @@
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
-require 'worksheetmapper' # TODO: must be a better way to include this
+require 'worksheetmapper'
 
 # TODO: figure out how to make constants
 module Spreadsheet
   class Adapter
-    include WorksheetMapper
-
+    extend WorksheetMapper # FIXME: include, extend which one??? i still don't get it.
     def initialize(spreadsheet_key = nil)
       # config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
       config_path = 'C:/Development/PiggyBanker/configurations/googledrive_config.json'
@@ -24,7 +23,7 @@ module Spreadsheet
     def budgets
       budgets = worksheets_with_title('budget')
       budgets.map! do |ws|
-        WorksheetMapper.map_article ws
+        WorksheetMapper.map_article ws # FIXME: NoMethodError
       end
     end
 
