@@ -2,9 +2,10 @@ require_relative 'spec_helper'
 require 'budget_article'
 require 'budget_item'
 
-describe Budget::Article do
+
+describe Model::Budget::Article do
   before do
-    @subject = Budget::Article.new '2016'
+    @subject = Model::Budget::Article.new '2016'
   end
 
   it 'should create an article successfully' do
@@ -13,11 +14,11 @@ describe Budget::Article do
   end
 
   it 'should add items successfully' do
-    test_item = Budget::Item.new id:          3,
-                                 description: 'debit item',
-                                 occurance:   :daily,
-                                 amount:      -9,
-                                 category:    'income'
+    test_item = Model::Budget::Item.new id:          3,
+                                        description: 'debit item',
+                                        occurance:   :daily,
+                                        amount:      -9,
+                                        category:    'income'
     @subject.add_item test_item
     result = @subject.items
     result.length.must_equal 1

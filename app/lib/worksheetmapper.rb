@@ -2,6 +2,7 @@ require 'budget_article'
 require 'budget_item'
 
 module WorksheetMapper
+  include Model
   # TODO: Find out how to break these into nested modules (or classes)
   def starting_range(worksheet)
     (6..worksheet.num_rows) # first 5 lines are heaaders
@@ -25,11 +26,11 @@ module WorksheetMapper
     category = worksheet[row, 2]
     occurance = worksheet[row, 3]
     amount = worksheet[row, 4].to_f * multiplier
-    Budget::Item.new id:          row,
-                     description: title,
-                     occurance:   occurance.to_sym,
-                     amount:      amount,
-                     category:    category
+    Model::Budget::Item.new id:          row,
+                            description: title,
+                            occurance:   occurance.to_sym,
+                            amount:      amount,
+                            category:    category
   end
 
   # for mapping all cells in worksheet to a valid expense entries
@@ -64,7 +65,7 @@ module WorksheetMapper
   # for mapping worksheets to article
   def map_article(worksheet)
     year = year_from_title worksheet.title
-    Budget::Article.new year, get_items(ws)
+    Model::Budget::Article.new year, get_items(ws)
   end
 
   def year_from_title(title)
