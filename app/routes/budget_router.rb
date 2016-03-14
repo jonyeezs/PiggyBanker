@@ -1,5 +1,6 @@
 require 'spreadsheet_adapter'
-
+# TODO: spec it
+# FIXME: find out why constantize removes the trailing s
 class Budget < BaseRouter
   adapter = Spreadsheet::Adapter.new PiggyBanker.settings['spreadsheet_key']
 
@@ -7,7 +8,7 @@ class Budget < BaseRouter
     respond_with availability: adapter.spreadsheet_available?
   end
 
-  get '/budgets' do
+  get '/all' do
     respond_with budgets: adapter.budgets
   end
 end
