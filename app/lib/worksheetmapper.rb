@@ -1,42 +1,33 @@
 require 'budget_article'
 require 'budget_item'
+require 'common'
 
 module WorksheetMapper
   include Model
+  extend Common::WorksheetHelpers
 
-  # COMMON methods
-  # TODO: Find out how to break these into nested modules (or classes)
-  def starting_range(worksheet)
-    (6..worksheet.num_rows) # first 5 lines are heaaders
+  # extract required rows
+  def self.row_to_hash(worksheet, row)
+    {
+      title:     worksheet[row, 1],
+      category:  worksheet[row, 2],
+      occurance: worksheet[row, 3],
+      amount:    worksheet[row, 4]
+    }
   end
 
-  def income_header?(header)
-    header.downcase.eql? 'income'
-  end
-
-  def expense_header?(header)
-    header.downcase.eql? 'expenses'
-  end
-
-  # row with empty cells
-  def broken_row?(ws, row)
-    [1, 2, 3, 4].any? { |col| ws[row, col].strip.empty? }
-  end
-
-  def map_item(worksheet, row, multiplier)
-    title = worksheet[row, 1]
-    category = worksheet[row, 2]
-    occurance = worksheet[row, 3]
-    amount = worksheet[row, 4].to_f * multiplier
+  # map a row in a worksheeet into an item
+  def self.map_item(worksheet, row, multiplier)
+    row_data = row_to_hash worksheet, row
     Model::Budget::Item.new id:          row,
-                            description: title,
-                            occurance:   occurance.to_sym,
-                            amount:      amount,
-                            category:    category
+                            description: row_data[:title],
+                            occurance:   row_data[:occurance].to_sym,
+                            amount:      row_data[:amount].to_f * multiplier,
+                            category:    row_data[:category]
   end
 
   # for mapping all cells in worksheet to a valid expense entries
-  def map_expenses(worksheet)
+  def self.map_expenses(worksheet)
     expenses = []
     skip = true # skip till we get expenses
     starting_range(worksheet).each do |row|
@@ -44,7 +35,7 @@ module WorksheetMapper
         skip = false
         next
       end
-      next if skip || broken_row?(worksheet, row)
+      next if skip || broken_hash_row?(row_to_hash(worksheet, row))
       expense = map_item worksheet, row, -1
       expenses.push expense
     end
@@ -52,12 +43,12 @@ module WorksheetMapper
   end
 
   # for mapping all cells in worksheet to a valid income entries
-  def map_incomes(worksheet)
+  def self.map_incomes(worksheet)
     incomes = []
     starting_range(worksheet).each do |row|
       break if expense_header? worksheet[row, 1]
       next if income_header? worksheet[row, 1]
-      next if broken_row? worksheet, row
+      next if broken_hash_row? row_to_hash(worksheet, row)
       income = map_item worksheet, row, 1
       incomes.push income
     end
@@ -65,16 +56,12 @@ module WorksheetMapper
   end
 
   # for mapping worksheets to article
-  def map_article(worksheet)
+  def self.map_article(worksheet)
     year = year_from_title worksheet.title
     Model::Budget::Article.new year, get_items(worksheet)
   end
 
-  def year_from_title(title)
-    title.downcase.delete('budget').delete('actual').strip
-  end
-
-  def get_items(ws)
+  def self.get_items(ws)
     expenses = map_expenses ws
     incomes = map_incomes ws
     expenses + incomes

@@ -4,7 +4,6 @@ require 'worksheetmapper'
 # TODO: figure out how to make constants
 module Spreadsheet
   class Adapter
-    extend WorksheetMapper # FIXME: include, extend which one??? i still don't get it.
     def initialize(spreadsheet_key = nil)
       # config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
       config_path = 'C:/Development/PiggyBanker/configurations/googledrive_config.json'
