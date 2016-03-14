@@ -4,6 +4,10 @@ module Model
     class Item
       attr_accessor :description, :occurance, :category, :amount
       attr_reader :id
+
+      OCCURANCE_ERROR_MSG = 'Wrong occurance'
+      ITEM_ERROR_MESSAGE = 'This is not a budget item'
+      private_constant :OCCURANCE_ERROR_MSG, :ITEM_ERROR_MESSAGE
       # NOTE: values are an increment of its previous occurance type
       #       in ascending order
       def occurances
@@ -20,8 +24,6 @@ module Model
 
       def initialize(params = {})
         u_occurance = params.fetch(:occurance, :monthly)
-        @occur_error = "Wrong occurance (#{u_occurance}). Try " + occurances.keys.to_sentence
-        @item_error = 'This is not a budget item'
         handle_valid_occurance u_occurance
         @id = params.fetch(:id)
         @description = params.fetch(:description, 'no description')
@@ -64,7 +66,7 @@ module Model
       end
 
       def ==(other)
-        fail ArgumentError, @item_error unless other.instance_of?(Budget::Item)
+        fail ArgumentError, ITEM_ERROR_MESSAGE unless other.instance_of?(Budget::Item)
         @description == other.description && @amount == other.amount &&
           @id == other.id && @category == other.category
       end
@@ -104,7 +106,8 @@ module Model
       end
 
       def handle_valid_occurance(occurance)
-        fail ArgumentError, @occur_error unless occurances.key?(occurance.to_sym)
+        msg = "#{OCCURANCE_ERROR_MSG}. Try #{occurances.keys.to_sentence}"
+        fail ArgumentError, msg unless occurances.key?(occurance.to_sym)
       end
     end
   end
