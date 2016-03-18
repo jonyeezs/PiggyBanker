@@ -31,7 +31,7 @@ module PiggyBanker
       Dir[File.dirname(__FILE__) + '/app/routes/**.rb'].each do |file_path|
         next if file_path.include? 'base_router'
         require file_path
-        router_name = File.basename(file_path, '.rb').chomp('_router').classify
+        router_name = File.basename(file_path, '.rb').chomp('_router').capitalize
         map('/' + router_name.downcase) { run router_name.constantize }
       end
     end
