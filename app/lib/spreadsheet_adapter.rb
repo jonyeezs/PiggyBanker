@@ -5,8 +5,7 @@ require 'worksheetmapper'
 module Spreadsheet
   class Adapter
     def initialize(spreadsheet_key = nil)
-      # config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
-      config_path = 'C:/Development/PiggyBanker/configurations/googledrive_config.json'
+      config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
       @session = GoogleDrive.saved_session(config_path)
       load_spreadsheet(spreadsheet_key) unless spreadsheet_key.nil?
     end
