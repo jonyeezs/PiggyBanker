@@ -3,17 +3,18 @@ require 'budget_item'
 module Model
   module Budget
     class Article
+      ERROR_MSG = 'This is not a budget item'
+      private_constant :ERROR_MSG
       attr_accessor :year
       attr_reader :items
 
       def initialize(year, items = [])
-        @error_msg = 'This is not a budget item'
         @year = year
         @items = items
       end
 
       def add_item(item)
-        fail ArgumentError, @error_msg unless item.instance_of?(Budget::Item)
+        fail ArgumentError, ERROR_MSG unless item.instance_of?(Budget::Item)
         @items.push(item)
       end
 

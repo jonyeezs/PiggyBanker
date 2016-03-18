@@ -10,7 +10,7 @@ module Model
       private_constant :OCCURANCE_ERROR_MSG, :ITEM_ERROR_MESSAGE
       # NOTE: values are an increment of its previous occurance type
       #       in ascending order
-      def occurances
+      OCCURANCES =
         {
           daily:       1,
           weekly:      7,
@@ -20,7 +20,6 @@ module Model
           semiannual:  2,
           annually:    2
         }
-      end
 
       def initialize(params = {})
         u_occurance = params.fetch(:occurance, :monthly)
@@ -74,14 +73,14 @@ module Model
       private
 
       def occurance_index
-        occurances.keys.find_index(@occurance)
+        OCCURANCES.keys.find_index(@occurance)
       end
 
       def buildup_price(till_occurance)
         new_value = @amount.to_f
-        buildup_array = occurances.keys.drop(occurance_index + 1)
+        buildup_array = OCCURANCES.keys.drop(occurance_index + 1)
         buildup_array.each do |name|
-          new_value *= occurances.fetch(name)
+          new_value *= OCCURANCES.fetch(name)
           break if name == till_occurance # calculate its last occurance as well
         end
         new_value.round(2)
@@ -89,16 +88,16 @@ module Model
 
       def breakdown_price(till_occurance)
         new_value = @amount.to_f
-        breakdown_array = occurances.keys.take(occurance_index + 1).reverse
+        breakdown_array = OCCURANCES.keys.take(occurance_index + 1).reverse
         breakdown_array.each do |name|
           break if name == till_occurance
-          new_value /= occurances.fetch(name)
+          new_value /= OCCURANCES.fetch(name)
         end
         new_value.round(2)
       end
 
       def occurance_direction(target)
-        if occurances.keys.find_index(target) > occurance_index
+        if OCCURANCES.keys.find_index(target) > occurance_index
           :up
         else
           :down
@@ -106,8 +105,8 @@ module Model
       end
 
       def handle_valid_occurance(occurance)
-        msg = "#{OCCURANCE_ERROR_MSG}. Try #{occurances.keys.to_sentence}"
-        fail ArgumentError, msg unless occurances.key?(occurance.to_sym)
+        msg = "#{OCCURANCE_ERROR_MSG}. Try #{OCCURANCES.keys.to_sentence}"
+        fail ArgumentError, msg unless OCCURANCES.key?(occurance.to_sym)
       end
     end
   end
