@@ -4,6 +4,15 @@ class BaseRouter < Sinatra::Base
   set :root, PiggyBanker.root
   set :public_folder, settings.root + PiggyBanker.settings['assetspath']
 
+  get '/' do
+    respond_with ruby: RUBY_VERSION
+  end
+
+  not_found do
+    status 404
+    erb :error
+  end
+
   def respond_with(content = nil)
     content_type :json
     response = {
@@ -14,12 +23,11 @@ class BaseRouter < Sinatra::Base
     response.to_json
   end
 
-  get '/' do
-    respond_with ruby: RUBY_VERSION
+  def response_internal_error
+    status 500
   end
 
-  not_found do
+  def response_not_found
     status 404
-    erb :error
   end
 end
