@@ -18,23 +18,22 @@ describe Spreadsheet::Adapter do
     @worksheets.push(other_budget_worksheet)
     WorksheetMapper.stubs(:map_article).returns('someobject')
     @spreadsheet = MockSpreadSheet.new @worksheets
+    @fake_session = mock(spreadsheet_by_key: @spreadsheet)
+    GoogleDrive.stubs(:saved_session).returns(@fake_session)
   end
 
   it 'should initialize with a spreadsheet' do
-    fake_session = mock(spreadsheet_by_key: @spreadsheet)
-    GoogleDrive.stubs(:saved_session).returns(fake_session)
     subject = Spreadsheet::Adapter.new 'somekey'
     subject.spreadsheet_available?.must_equal true
   end
 
   it 'should not have a spreadsheet when no key is given' do
+    @fake_session.unstub(:spreadsheet_by_key) # TODO: should have a expected_not or something..find out how
     subject = Spreadsheet::Adapter.new
     subject.spreadsheet_available?.must_equal false
   end
 
   it 'should map only budget worksheets' do
-    fake_session = mock(spreadsheet_by_key: @spreadsheet)
-    GoogleDrive.stubs(:saved_session).returns(fake_session)
     subject = Spreadsheet::Adapter.new 'somekey'
     result = subject.budgets
     result.length.must_equal 2

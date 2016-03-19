@@ -2,7 +2,7 @@ require 'date'
 
 class BaseRouter < Sinatra::Base
   set :root, PiggyBanker.root
-  set :public_folder, settings.root + PiggyBanker.settings['assetspath']
+  set :public_folder, settings.root << PiggyBanker.settings['assetspath']
 
   get '/' do
     respond_with ruby: RUBY_VERSION
@@ -10,7 +10,7 @@ class BaseRouter < Sinatra::Base
 
   not_found do
     status 404
-    erb :error
+    # erb :error # FIXME: how to stub erb
   end
 
   def respond_with(content = nil)

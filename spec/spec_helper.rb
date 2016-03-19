@@ -2,7 +2,22 @@ ENV['RACK_ENV'] = 'test'
 require 'bundler'
 Bundler.require :default, :test
 
-require_relative '../server'
+## PiggyBanker's settings
+# TODO: how do i really mock this...
+module PiggyBanker
+  def self.root
+    'root\dir'
+  end
+
+  def self.settings
+    {
+      'spreadsheet_key'      => 'somekey',
+      'googledrive_settings' => 'sakdjisdsalsadkjsaj',
+      'assetspath'           => 'path_to_my_assets',
+      'version'              => 'v.test'
+    }
+  end
+end
 
 # Some Helper mock classes you can use
 class MockWorksheet # Implementation simplified from GoogleDrive::Worksheet

@@ -1,7 +1,5 @@
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
 require 'worksheetmapper'
-
-# TODO: figure out how to make constants
 module Spreadsheet
   class Adapter
     def initialize(spreadsheet_key = nil)
