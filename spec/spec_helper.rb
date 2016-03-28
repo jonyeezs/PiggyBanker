@@ -3,7 +3,7 @@ require 'bundler'
 Bundler.require :default, :test
 
 ## PiggyBanker's settings
-# TODO: how do i really mock this...
+# TODO: Mock the module instead of creating a mock module
 module PiggyBanker
   def self.root
     'root\dir'
