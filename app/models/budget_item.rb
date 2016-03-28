@@ -1,4 +1,6 @@
 # TODO: use price gem
+# TODO: use a factory pattern to differentiate expense and income
+#       http://katafrakt.me/2015/05/15/when-you-call-object-new/
 module Model
   module Budget
     class Item
