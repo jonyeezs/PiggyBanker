@@ -21,4 +21,8 @@ describe Spreadsheet::Budgets do
     result = @subject.by_year('2017')
     result.year.must_equal '2017'
   end
+
+  it 'should return all budget articles' do
+    assert @subject.articles.size == 2
+  end
 end

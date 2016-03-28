@@ -12,7 +12,7 @@ module Spreadsheet
       @spreadsheet = @session.spreadsheet_by_key(spreadsheet_key)
     end
 
-    def spreadsheet_available?
+    def spreadsheet_available? # TODO: handle this scenario better. maybe through exceptions
       !@spreadsheet.nil?
     end
 

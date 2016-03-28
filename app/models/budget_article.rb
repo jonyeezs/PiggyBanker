@@ -5,8 +5,7 @@ module Model
     class Article
       ERROR_MSG = 'This is not a budget item'
       private_constant :ERROR_MSG
-      attr_accessor :year
-      attr_reader :items
+      attr_reader :items, :year
 
       def initialize(year, items = [])
         @year = year

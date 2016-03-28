@@ -2,14 +2,13 @@ require 'spreadsheet_budgets'
 # TODO: spec it
 # FIXME: find out why constantize removes the trailing s
 class Budgets < BaseRouter
+  budgets = Spreadsheet::Budgets.new
   get '' do
-    return response_internal_error unless adapter.spreadsheet_available?
-    respond_with budgets: adapter.budgets
+    respond_with budgets: budgets.articles
   end
 
   get '/:year' do
-    test = "Hello to you #{params[:name]}. "
-    test += some_creatures.show_creatures
-    respond_with message: test
+    retrieved_budget = budgets.by_year params[:year]
+    respond_with budget: retrieved_budget
   end
 end
