@@ -14,8 +14,7 @@ module PiggyBanker
 
   def self.app
     Server.new do
-      load_paths '/app/lib'
-      load_paths '/app/models'
+      load_paths '/app'
       load_base_route
       load_routes
     end
