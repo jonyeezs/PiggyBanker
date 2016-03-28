@@ -12,14 +12,14 @@ module Spreadsheet
       @spreadsheet = @session.spreadsheet_by_key(spreadsheet_key)
     end
 
-    def spreadsheet_available? # TODO: handle this scenario better. maybe through exceptions
+    def spreadsheet_available?
       !@spreadsheet.nil?
     end
 
     def budgets
       budgets = worksheets_with_title('budget')
       budgets.map! do |ws|
-        WorksheetMapper.map_article ws # FIXME: NoMethodError
+        WorksheetMapper.map_article ws
       end
     end
 
