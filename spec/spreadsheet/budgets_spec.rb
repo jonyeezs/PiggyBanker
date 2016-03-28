@@ -1,7 +1,7 @@
-require_relative 'spec_helper'
-require 'spreadsheet_budgets'
+require 'spec_helper'
+require 'lib/adapters/budgets'
 
-describe Spreadsheet::Budgets do
+describe Adapter::Budgets do
   before do
     adapter = Object.new
     adapter.stubs(:budgets).returns(
@@ -9,8 +9,8 @@ describe Spreadsheet::Budgets do
         stub(year: '2016'),
         stub(year: '2017')
       ])
-    Spreadsheet::Adapter.stubs(:new).returns(adapter)
-    @subject = Spreadsheet::Budgets.new
+    Adapter::Spreadsheet.stubs(:new).returns(adapter)
+    @subject = Adapter::Budgets.new
   end
 
   it 'should initialize with elements in articles' do

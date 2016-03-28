@@ -1,4 +1,4 @@
-require 'spreadsheet_budgets'
+require 'lib/adapters/budgets'
 # TODO: spec it
 # FIXME: find out why constantize removes the trailing s
 class Budgets < BaseRouter

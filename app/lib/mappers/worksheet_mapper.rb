@@ -1,6 +1,6 @@
-require 'budget_article'
-require 'budget_item'
-require 'common'
+require 'models/budget/article'
+require 'models/budget/item'
+require 'lib/common/worksheet_helpers'
 
 module WorksheetMapper
   include Model

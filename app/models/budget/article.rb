@@ -1,4 +1,4 @@
-require 'budget_item'
+require_relative 'item'
 
 module Model
   module Budget

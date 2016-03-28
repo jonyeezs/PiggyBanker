@@ -2,10 +2,9 @@
 require 'rake/testtask'
 
 Rake::TestTask.new do |t|
-  Dir['app/**'].each do |folder| # add lib folders to TestTask's $LOAD_PATH
-    t.libs << File.join(File.dirname(__FILE__), folder)
-  end
-  t.pattern = './spec/*_spec.rb'
+  t.libs << File.join(File.dirname(__FILE__), 'app')
+  t.libs << File.join(File.dirname(__FILE__), 'spec')
+  t.pattern = './spec/**/*_spec.rb'
 end
 
 task default: :test

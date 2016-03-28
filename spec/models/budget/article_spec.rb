@@ -1,7 +1,6 @@
-require_relative 'spec_helper'
-require 'budget_article'
-require 'budget_item'
-
+require 'spec_helper'
+require 'models/budget/article'
+require 'models/budget/item'
 
 describe Model::Budget::Article do
   before do

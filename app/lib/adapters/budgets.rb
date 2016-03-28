@@ -1,11 +1,11 @@
-require 'spreadsheet_adapter'
+require_relative 'spreadsheet'
 
-module Spreadsheet
+module Adapter
   class Budgets
     attr_accessor :articles
 
     def initialize
-      adapter = Spreadsheet::Adapter.new PiggyBanker.settings['spreadsheet_key']
+      adapter = Adapter::Spreadsheet.new PiggyBanker.settings['spreadsheet_key']
       @articles = adapter.budgets
     end
 

@@ -38,19 +38,3 @@ If this ever kicks off well with her, the spreadsheet can be changed to somethin
 This is the, strict, spreadsheet layout
 
 ![](spreadsheet_example_for_readme.png)
-
-## Folder structure
-```
-  app\
-    |
-    | lib\
-    |   | mappers
-    |   | adapters
-    |   | common functionalities
-    |
-    | models\
-    |    | object models
-    |
-    | routes\
-         | API url paths
-```

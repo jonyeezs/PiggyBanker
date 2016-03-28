@@ -1,5 +1,4 @@
-require_relative 'spec_helper'
-require 'budget_item'
+require 'spec_helper'
 
 describe Model::Budget::Item do
   it 'should initialize successfully' do
