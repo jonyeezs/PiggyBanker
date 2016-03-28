@@ -16,6 +16,18 @@ Connected to Google Drive through [goodle-drive-ruby](https://github.com/gimite/
 
 Using rake to build my test.
 
+
+## Starting the endpoint service
+
+Sinatra just sits on top of rack. So why not utilize its simple startup process; thus the use of config.ru.
+
+simple type `rackup`
+
+## Run spec test
+
+Command is `rake test`
+
+
 ## The Database
 
 The database is a spreadsheet on google docs, formatted by preference of my SO.
@@ -42,13 +54,3 @@ This is the, strict, spreadsheet layout
     | routes\
          | API url paths
 ```
-
-## Starting the endpoint service
-
-Sinatra just sits on top of rack. So why not utilize its simple startup process; thus the use of config.ru.
-
-simple type `rackup`
-
-## Run spec test
-
-Command is `rake test`
