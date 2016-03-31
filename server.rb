@@ -40,7 +40,7 @@ module PiggyBanker
 
     private
 
-    def load_base_route # TODO: find out if order matters whe requiring
+    def load_base_route
       require_relative PiggyBanker.root + '/app/routes/base_router'
       map('/') { run BaseRouter }
     end
