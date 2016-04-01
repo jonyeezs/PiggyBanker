@@ -9,9 +9,13 @@ module Adapter
       @articles = adapter.budgets
     end
 
+    def available_years
+      @articles.map(&:year)
+    end
+
     def by_year(year)
       index = @articles.index { |article| article.year == year }
-      # TODO: handle situations where index is not found
+      # TODO: handle situations where index is not founds
       @articles[index]
     end
 
