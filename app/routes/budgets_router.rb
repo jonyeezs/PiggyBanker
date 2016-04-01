@@ -1,6 +1,5 @@
 require 'lib/adapters/budgets'
 # TODO: spec it
-# FIXME: find out why constantize removes the trailing s
 class Budgets < BaseRouter
   budgets = Adapter::Budgets.new
   get '' do
