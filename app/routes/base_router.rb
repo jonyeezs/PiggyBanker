@@ -1,6 +1,10 @@
 require 'date'
 
 class BaseRouter < Sinatra::Base
+  configure :development do
+    register Sinatra::Reloader
+  end
+
   set :root, PiggyBanker.root
   set :public_folder, settings.root << PiggyBanker.settings['assetspath']
 

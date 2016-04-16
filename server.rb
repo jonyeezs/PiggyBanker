@@ -5,7 +5,7 @@ require 'yaml'
 
 module PiggyBanker
   def self.settings
-    @app_config ||= YAML.load_file(@root + '/configurations/appConfig.yml')
+    @app_config ||= YAML.load_file(@root + '/config/appConfig.yml')
   end
 
   def self.root
@@ -15,8 +15,8 @@ module PiggyBanker
   def self.app
     Server.new do
       load_paths '/app'
-      load_base_route
-      load_routes
+      map_base_route
+      map_routes
     end
   end
 
@@ -25,7 +25,7 @@ module PiggyBanker
       $LOAD_PATH << File.join(PiggyBanker.root, foldername)
     end
 
-    def load_routes
+    def map_routes
       # Refer to: https://www.safaribooksonline.com/library/view/sinatra-up-and/9781449306847/ch04.html
       # Rack DSL offers a method besides use and run: map.
       # This nifty method allows you to map a given path to a Rack endpoint.
@@ -40,7 +40,7 @@ module PiggyBanker
 
     private
 
-    def load_base_route
+    def map_base_route
       require_relative PiggyBanker.root + '/app/routes/base_router'
       map('/') { run BaseRouter }
     end

@@ -3,7 +3,6 @@ require 'lib/adapters/budgets'
 class Budgets < BaseRouter
   budgets = Adapter::Budgets.new
   get '' do
-    year = params['year']
     respond_with budgets: budgets.articles
   end
 

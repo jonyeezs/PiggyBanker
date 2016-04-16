@@ -21,12 +21,18 @@ Using rake to build my test.
 
 Sinatra just sits on top of rack. So why not utilize its simple startup process; thus the use of config.ru.
 
-simple type `rackup`
+`rackup`
+
+<small>fyi about rack: If you don't specify an environment, development is used by default. Specify then environment by including parameter `-E <ENV_NAME>`. If you specify an environment that you don't configure, no configuration block will match.</small>
+
+### Run as development
+
+Using [Guard](https://github.com/guard/guard) for in-process automated re-launching of rack. 
+`bundle exec guard`
 
 ## Run spec test
 
-Command is `rake test`
-
+`rake test`
 
 ## The Database
 

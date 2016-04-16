@@ -1,3 +1,4 @@
+# http://bundler.io/groups.html
 source 'https://rubygems.org'
 ruby '2.1.7'
 
@@ -7,9 +8,14 @@ gem 'activesupport', '~> 4.2', '>= 4.2.5', require: 'active_support/all'
 gem 'json'
 gem 'google_drive'
 
-# http://bundler.io/groups.html
-# group :development do
-# end
+group :development do
+  gem 'sinatra-contrib'
+  gem 'win32console'
+  gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+  gem 'guard'
+  gem 'guard-rack'
+  # gem 'rerun' works only on Unix
+end
 
 group :test do
   gem 'rake', require: 'rake/testtask'
