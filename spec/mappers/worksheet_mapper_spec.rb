@@ -25,7 +25,7 @@ describe 'WorksheetMapper' do
       item.id.must_equal 11
       item.description.must_equal @worksheet[11, 1]
       item.category.must_equal @worksheet[11, 2]
-      item.occurance.must_equal @worksheet[11, 3].to_sym
+      item.occurance.must_equal @worksheet[11, 3]
       item.debit?.must_equal true
     end
   end
