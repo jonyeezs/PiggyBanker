@@ -6,6 +6,7 @@ We're monitoring our piggybank!
 
 This will be an educational experiment for me to learn Ruby and at the same time do some household management.
 
+So expect to see lots of fyi/reference-type comments for educational knowledge.
 
 
 ## What's involved
@@ -27,7 +28,7 @@ Sinatra just sits on top of rack. So why not utilize its simple startup process;
 
 ### Run as development
 
-Using [Guard](https://github.com/guard/guard) for in-process automated re-launching of rack. 
+Using [Guard](https://github.com/guard/guard) for in-process automated re-launching of rack.
 `bundle exec guard`
 
 ## Run spec test
