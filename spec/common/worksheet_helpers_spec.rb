@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'lib/common/worksheet_helpers'
 
-describe 'Common::WorksheetHelpers' do
+describe Common::WorksheetHelpers do
   before do
     @subject_instance = SubjectFactory.new.include_module(Common::WorksheetHelpers)
   end
