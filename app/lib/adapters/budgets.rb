@@ -1,3 +1,4 @@
+# TODO: rethink your structure how does it relate from your adapters all the way to your representation of your models
 require_relative 'spreadsheet'
 
 module Adapter
