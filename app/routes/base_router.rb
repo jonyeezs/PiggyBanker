@@ -1,6 +1,13 @@
 require 'date'
+require 'sinatra/reloader'
+require 'sinatra/cross_origin'
 
 class BaseRouter < Sinatra::Base
+  configure do
+    register Sinatra::CrossOrigin
+    enable :cross_origin
+  end
+
   configure :development do
     register Sinatra::Reloader
   end
