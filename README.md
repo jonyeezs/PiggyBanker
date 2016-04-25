@@ -42,6 +42,8 @@ So that's the limitation I have to work with but that's fine with me.
 
 If this ever kicks off well with her, the spreadsheet can be changed to something more of a database structure.
 
+Note: the amounts should be in pure numeric text.
+
 This is the, strict, spreadsheet layout
 
 ![](spreadsheet_example_for_readme.png)

@@ -16,14 +16,13 @@ describe Model::Budget::Article do
     test_item = Model::Budget::Item.new id:          3,
                                         description: 'debit item',
                                         occurance:   :daily,
-                                        amount:      -9,
+                                        amount:      9,
                                         category:    'income'
     @subject.add_item test_item
     result = @subject.items
     result.length.must_equal 1
     result[0].description.must_equal 'debit item'
     result[0].category.must_equal 'income'
-    result[0].debit?.must_equal true
   end
 
   it 'should not add non budget items' do

@@ -26,20 +26,23 @@ describe Model::Budget::Item do
   end
 
   it 'should show amount in float of 2 decimal places' do
-    subject = Model::Budget::Item.new amount: -4.99, id: 23 # -4.9966654
-    subject.amount.must_equal(-4.99)
+    subject = Model::Budget::Item.new amount: 3967.593, id: 23 # -4.9966654
+    subject.amount.must_equal(3967.59)
   end
 
   it 'should handle debit items' do
     subject = Model::Budget::Item.new description: 'debit item', id: 1,
-                                occurance: :daily, amount: -4.12
+                                occurance: :daily, amount: 4.12
+    subject.amount.must_equal 4.12
     subject.debit?.must_equal true
     subject.credit?.must_equal false
   end
 
   it 'should handle credit items' do
     subject = Model::Budget::Item.new description: 'credit item', occurance: :daily,
-                                amount: 9, id: 3
+                                amount: 313_45.45, id: 3
+    subject.as_credit!
+    subject.amount.must_equal(-313_45.45)
     subject.debit?.must_equal false
     subject.credit?.must_equal true
   end

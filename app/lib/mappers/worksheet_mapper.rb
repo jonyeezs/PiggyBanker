@@ -17,13 +17,15 @@ module WorksheetMapper
   end
 
   # map a row in a worksheeet into an item
-  def self.map_item(worksheet, row, multiplier)
+  def self.map_item(worksheet, row, isIncome = true)
     row_data = row_to_hash worksheet, row
-    Model::Budget::Item.new id:          row,
-                            description: row_data[:title],
-                            occurance:   row_data[:occurance].to_sym,
-                            amount:      row_data[:amount].to_f * multiplier,
-                            category:    row_data[:category]
+    mapped_item = Model::Budget::Item.new id:          row,
+                                          description: row_data[:title],
+                                          occurance:   row_data[:occurance].to_sym,
+                                          amount:      row_data[:amount],
+                                          category:    row_data[:category]
+    mapped_item.as_credit! unless isIncome
+    mapped_item
   end
 
   # for mapping all cells in worksheet to a valid expense entries

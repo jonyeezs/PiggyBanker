@@ -11,13 +11,14 @@ module Model
       attr_accessor :description, :category, :amount
       attr_reader :id
 
+      # TODO: use merge for defaults
       def initialize(params = {})
         u_occurance = params.fetch(:occurance, :monthly)
         @occurance = Common::Occurance.new u_occurance
         @id = params.fetch(:id)
         @description = params.fetch(:description, 'no description')
         @category = params.fetch(:category, 'misc')
-        @amount = params.fetch(:amount, 0.00).to_f.round(2) #FIXME: figure out how to use bankers rounding
+        @amount = params.fetch(:amount, 0.00).to_f.round(2) # FIXME: figure out how to use bankers rounding
       end
 
       def occurance
@@ -28,16 +29,24 @@ module Model
         @occurance = Common::Occurance.new new_occurance
       end
 
+      def as_credit!
+        @amount = -@amount
+      end
+
+      def as_debit!
+        @amount = @amount.abs
+      end
+
       def to_s
         "#{@description} (Category: #{@category}) #{@amount}, #{@occurance}"
       end
 
       def debit?
-        @amount < 0
+        @amount > 0
       end
 
       def credit?
-        @amount > 0
+        @amount < 0
       end
 
       def amount_for(occurance_type)

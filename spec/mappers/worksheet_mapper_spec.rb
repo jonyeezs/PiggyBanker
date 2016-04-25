@@ -1,4 +1,5 @@
 require 'spec_helper'
+# FIXME: test exactly what the mapper should be doing
 
 describe 'WorksheetMapper' do
   before do
@@ -11,7 +12,7 @@ describe 'WorksheetMapper' do
     @worksheet[3] = %w('should ignore #4')
     @worksheet[4] = %w('should ignore #5')
     @worksheet[5] = ['INCOME', 1]
-    @worksheet[6] = ['Salary', 'Cash-in', 'monthly', '7331.00']
+    @worksheet[6] = ['Salary', 'Cash-in', 'monthly', '7331.20']
     @worksheet[7] = [' ', '', '', '']
     @worksheet[8] = ['Expenses', ' ']
     @worksheet[9] = ['Grocery', 'Food', 'weekly', '23.50']
@@ -20,13 +21,17 @@ describe 'WorksheetMapper' do
   end
 
   describe 'map_item' do
-    it 'should map item with - multiplier for expense' do
-      item = WorksheetMapper.map_item @worksheet, 11, -1
+    it 'should map expense item' do
+      item = WorksheetMapper.map_item @worksheet, 11, false
       item.id.must_equal 11
       item.description.must_equal @worksheet[11, 1]
       item.category.must_equal @worksheet[11, 2]
       item.occurance.must_equal @worksheet[11, 3]
-      item.debit?.must_equal true
+      item.credit?.must_equal true
+    end
+    it 'should map item\'s amount correctly' do
+      item = WorksheetMapper.map_item @worksheet, 6, true
+      item.amount.must_equal 7331.20
     end
   end
 
