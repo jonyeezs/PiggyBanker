@@ -38,7 +38,7 @@ module WorksheetMapper
         next
       end
       next if skip || broken_hash_row?(row_to_hash(worksheet, row))
-      expense = map_item worksheet, row, -1
+      expense = map_item worksheet, row, false
       expenses.push expense
     end
     expenses
@@ -51,7 +51,7 @@ module WorksheetMapper
       break if expense_header? worksheet[row, 1]
       next if income_header? worksheet[row, 1]
       next if broken_hash_row? row_to_hash(worksheet, row)
-      income = map_item worksheet, row, 1
+      income = map_item worksheet, row
       incomes.push income
     end
     incomes
