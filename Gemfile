@@ -9,6 +9,7 @@ gem 'activesupport', '~> 4.2', '>= 4.2.5', require: 'active_support/all'
 gem 'json'
 gem 'google_drive'
 
+# TODO: look into a debugging tool
 group :development do
   gem 'sinatra-contrib'
   gem 'wdm', '>= 0.1.0' if Gem.win_platform?
