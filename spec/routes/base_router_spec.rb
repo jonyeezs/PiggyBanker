@@ -9,11 +9,6 @@ def app
 end
 
 describe 'base router' do
-  it 'should handle request with OK response' do
-    get '/'
-    assert_equal last_response.ok?, true
-  end
-
   it 'should handle request leading to 404' do
     get '/fakefakefake'
     assert_equal last_response.status, 404

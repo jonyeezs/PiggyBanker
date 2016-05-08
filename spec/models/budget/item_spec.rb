@@ -54,6 +54,16 @@ describe Model::Budget::Item do
     subject.amount_for(:weekly).must_equal 888.88
   end
 
+  it 'should change occurance and amount when the occurance is changed' do
+    expected_value = 3
+    Common::Occurance.any_instance.stubs(:generate_price_conversion).returns(proc { expected_value })
+    subject = Model::Budget::Item.new description: 'something', occurance: :daily,
+                                amount: 888.88, id: 4
+    subject.occurance = 'monthly'
+    subject.amount.must_equal expected_value
+    subject.occurance.to_s.must_equal 'monthly'
+  end
+
   it 'should use == correctly' do
     test_1 =  Model::Budget::Item.new description: 'same same', occurance: :monthly,
                                 category: 'fakeCategory', amount: 3, id: 20

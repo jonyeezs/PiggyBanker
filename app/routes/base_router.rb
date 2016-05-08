@@ -15,10 +15,6 @@ class BaseRouter < Sinatra::Base
   set :root, PiggyBanker.root
   set :public_folder, settings.root << PiggyBanker.settings['assetspath']
 
-  get '/' do
-    respond_with ruby: RUBY_VERSION
-  end
-
   not_found do
     status 404
     # erb :error # FIXME: how to stub erb

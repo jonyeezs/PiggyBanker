@@ -26,7 +26,9 @@ module Model
       end
 
       def occurance=(new_occurance)
-        @occurance = Common::Occurance.new new_occurance
+        occurance = Common::Occurance.new new_occurance
+        @amount = @occurance.generate_price_conversion(occurance).call(@amount)
+        @occurance = occurance
       end
 
       def as_credit!

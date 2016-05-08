@@ -1,17 +1,28 @@
 require 'lib/adapters/budgets'
-# TODO: spec it
+
 class Budgets < BaseRouter
-  budgets = Adapter::Budgets.new
-  get '' do
-    respond_with budgets: budgets.articles
+  get '/' do
+    respond_with budgets: Adapter::Budgets.new.articles
   end
 
   get '/years' do
-    respond_with years: budgets.available_years
+    respond_with years: Adapter::Budgets.new.available_years
   end
 
   get '/years/:year' do
-    retrieved_budget = budgets.by_year params[:year]
-    respond_with budget: retrieved_budget
+    articles = Adapter::Budgets.new.by_year params[:year]
+    # queries
+    articles.change_occurances! params['occurance'] if params.key? 'occurance'
+    articles.items = filter_items_by_transaction(articles, params['transaction_type']) if params.key? 'transaction_type'
+
+    respond_with budget: articles.items
+  end
+
+  def filter_items_by_transaction(articles, transaction)
+    if transaction == 'debit'
+      articles.debit_items
+    else
+      articles.credit_items
+    end
   end
 end
