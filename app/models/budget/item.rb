@@ -11,14 +11,14 @@ module Model
       attr_accessor :description, :category, :amount
       attr_reader :id
 
-      # TODO: use merge for defaults
+      # FIXME: use merge for defaults
       def initialize(params = {})
         u_occurance = params.fetch(:occurance, :monthly)
         @occurance = Common::Occurance.new u_occurance
         @id = params.fetch(:id)
         @description = params.fetch(:description, 'no description')
         @category = params.fetch(:category, 'misc')
-        @amount = params.fetch(:amount, 0.00).to_f.round(2) # FIXME: figure out how to use bankers rounding
+        @amount = params.fetch(:amount, 0.00).to_f.round(2) # TODO: figure out how to use bankers rounding
       end
 
       def occurance
