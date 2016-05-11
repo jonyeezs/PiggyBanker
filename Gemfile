@@ -1,18 +1,17 @@
 # http://bundler.io/groups.html
 source 'https://rubygems.org'
-ruby '2.1.7'
+ruby '2.2.4'
 
-gem 'sinatra', require: 'sinatra/base'
+gem 'sinatra', '~> 1.4', '>= 1.4.7', require: 'sinatra/base'
 gem 'sinatra-cross_origin'
 gem 'thin'
-gem 'activesupport', '~> 4.2', '>= 4.2.5', require: 'active_support/all'
+gem 'activesupport', require: 'active_support/all'
 gem 'json'
-gem 'google_drive'
+gem 'google_drive', '~> 2.0.0.pre1'
 
 # TODO: look into a debugging tool
 group :development do
   gem 'sinatra-contrib'
-  gem 'wdm', '>= 0.1.0' if Gem.win_platform?
   gem 'guard'
   gem 'guard-rack'
   # gem 'rerun' works only on Unix
