@@ -2,14 +2,11 @@ OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
 require 'lib/mappers/worksheet_mapper'
 module Adapter
   class Spreadsheet
-    def initialize(spreadsheet_key = nil)
+    def initialize(spreadsheet_key)
+      fail ArgumentError if spreadsheet_key.nil?
       config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
       @session = GoogleDrive.saved_session(config_path)
-      load_spreadsheet(spreadsheet_key) unless spreadsheet_key.nil?
-    end
-
-    def load_spreadsheet(spreadsheet_key)
-      @spreadsheet = @session.spreadsheet_by_key(spreadsheet_key)
+      @spreadsheet = @session.spreadsheet_by_key spreadsheet_key
     end
 
     def spreadsheet_available?
