@@ -19,7 +19,7 @@ describe 'budgets router' do
     it 'should return all articles' do
       get '/'
       assert last_response.ok?
-      assert last_response.body.include? 'budgets'
+      assert last_response.body.include? 'items'
     end
   end
   describe 'get /years' do
@@ -41,7 +41,7 @@ describe 'budgets router' do
     it 'should return all articles' do
       get "/years/#{@expected_year}"
       assert last_response.ok?
-      assert last_response.body.include? 'budget'
+      assert last_response.body.include? 'items'
     end
     it 'should take in query for occurance' do
       @mockbudget.expects(:change_occurances!).once.with 'century'

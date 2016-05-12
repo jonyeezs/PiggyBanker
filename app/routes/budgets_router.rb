@@ -2,7 +2,7 @@ require 'lib/adapters/budgets'
 
 class Budgets < BaseRouter
   get '/' do
-    respond_with budgets: budget.articles
+    respond_with items: budget.articles
   end
 
   get '/years' do
@@ -15,7 +15,7 @@ class Budgets < BaseRouter
     articles.change_occurances! params['occurance'] if params.key? 'occurance'
     articles.items = filter_items_by_transaction(articles, params['transaction_type']) if params.key? 'transaction_type'
 
-    respond_with budget: articles.items
+    respond_with items: articles.items
   end
 
   def budget
