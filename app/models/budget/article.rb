@@ -13,6 +13,10 @@ module Model
         @items = items
       end
 
+      def hashed_items
+        @items.map(&:to_h)
+      end
+
       def add_item(item)
         fail ArgumentError, ERROR_MSG unless item.instance_of?(Budget::Item)
         @items.push(item)

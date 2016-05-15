@@ -25,6 +25,16 @@ module Model
         @occurance.to_s
       end
 
+      def to_h # TODO: how to extend to_json
+        {
+          id:          @id,
+          description: @description,
+          category:    @category,
+          occurance:   @occurance.to_s,
+          amount:      @amount
+        }
+      end
+
       def occurance=(new_occurance)
         occurance = Common::Occurance.new new_occurance
         @amount = @occurance.generate_price_conversion(occurance).call(@amount)

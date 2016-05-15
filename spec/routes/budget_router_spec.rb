@@ -35,8 +35,9 @@ describe 'budgets router' do
   describe 'get /years/{value}' do
     before do
       @expected_year = '2016'
-      @mockbudget = stub_everything('Model::Budget::Article') # so we don't have to stub 'budget.items = ...'
-      @mockbudgets.expects(:by_year).with(@expected_year).returns(@mockbudget)
+      @mock_articles = stub_everything('Model::Budget::Article') # so we don't have to stub 'budget.items = ...'
+      @mock_articles.expects(:hashed_items).returns('array_of_hashes')
+      @mockbudgets.expects(:by_year).with(@expected_year).returns(@mock_articles)
     end
     it 'should return all articles' do
       get "/years/#{@expected_year}"
@@ -44,15 +45,15 @@ describe 'budgets router' do
       assert last_response.body.include? 'items'
     end
     it 'should take in query for occurance' do
-      @mockbudget.expects(:change_occurances!).once.with 'century'
+      @mock_articles.expects(:change_occurances!).once.with 'century'
       get "/years/#{@expected_year}", occurance: 'century'
     end
     it 'should take in query for transaction_type of debit' do
-      @mockbudget.expects(:debit_items).once.returns ['newitems']
+      @mock_articles.expects(:debit_items).once.returns ['newitems']
       get "/years/#{@expected_year}", transaction_type: 'debit'
     end
     it 'should take in query for transaction_type of credit' do
-      @mockbudget.expects(:credit_items).once.returns ['newitems']
+      @mock_articles.expects(:credit_items).once.returns ['newitems']
       get "/years/#{@expected_year}", transaction_type: 'credit'
     end
   end
