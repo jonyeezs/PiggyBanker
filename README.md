@@ -28,8 +28,6 @@ Sinatra just sits on top of rack. So why not utilize its simple startup process;
 
 ### Run as development
 
-**Unforunately 2.2.4 is buggy for guard so just use rackup**
-
 Using [Guard](https://github.com/guard/guard) for in-process automated re-launching of rack.
 `bundle exec guard`
 
