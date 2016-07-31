@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'lib/adapters/budgets'
+require 'lib/data_mappers/budget'
 
-describe Adapter::Budgets do
+describe Services::Budgets do
   before do
     adapter = Object.new
     adapter.stubs(:budgets).returns(
@@ -9,8 +9,8 @@ describe Adapter::Budgets do
         stub(year: '2016'),
         stub(year: '2017')
       ])
-    Adapter::Spreadsheet.stubs(:new).returns(adapter)
-    @subject = Adapter::Budgets.new
+    DataMappers::Budget.stubs(:new).returns(adapter)
+    @subject = Services::Budgets.new
   end
 
   it 'should initialize with elements in articles' do
