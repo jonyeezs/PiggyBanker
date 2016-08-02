@@ -1,16 +1,15 @@
 require 'spec_helper'
-require 'lib/adapters/budgets'
 
-describe Adapter::Budgets do
+describe Services::Budgets do
   before do
-    adapter = Object.new
-    adapter.stubs(:budgets).returns(
+    data_mapper = Object.new
+    data_mapper.stubs(:budgets).returns(
       [
         stub(year: '2016'),
         stub(year: '2017')
       ])
-    Adapter::Spreadsheet.stubs(:new).returns(adapter)
-    @subject = Adapter::Budgets.new
+    DataMappers::Budget.stubs(:new).returns(data_mapper)
+    @subject = Services::Budgets.new
   end
 
   it 'should initialize with elements in articles' do
@@ -23,6 +22,6 @@ describe Adapter::Budgets do
   end
 
   it 'should return all budget articles' do
-    assert @subject.articles.size == 2
+    assert @subject.all_articles.size == 2
   end
 end

@@ -1,8 +1,8 @@
-require 'lib/adapters/budgets'
+require 'lib/services/budgets'
 
 class Budgets < BaseRouter
   get '/' do
-    respond_with items: budget.articles
+    respond_with items: budget.all_articles
   end
 
   get '/years' do
@@ -19,7 +19,7 @@ class Budgets < BaseRouter
   end
 
   def budget
-    @budgets ||= Adapter::Budgets.new
+    Services::Budgets.new
   end
 
   def filter_items_by_transaction(articles, transaction)
