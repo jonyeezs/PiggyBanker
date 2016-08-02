@@ -1,15 +1,14 @@
 require 'spec_helper'
-require 'lib/data_mappers/budget'
 
 describe Services::Budgets do
   before do
-    adapter = Object.new
-    adapter.stubs(:budgets).returns(
+    data_mapper = Object.new
+    data_mapper.stubs(:budgets).returns(
       [
         stub(year: '2016'),
         stub(year: '2017')
       ])
-    DataMappers::Budget.stubs(:new).returns(adapter)
+    DataMappers::Budget.stubs(:new).returns(data_mapper)
     @subject = Services::Budgets.new
   end
 
@@ -23,6 +22,6 @@ describe Services::Budgets do
   end
 
   it 'should return all budget articles' do
-    assert @subject.articles.size == 2
+    assert @subject.all_articles.size == 2
   end
 end

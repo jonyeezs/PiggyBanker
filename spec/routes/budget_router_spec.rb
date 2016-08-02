@@ -9,12 +9,12 @@ end
 
 describe 'budgets router' do
   before do
-    @mockbudgets = mock('Adapter::Spreadsheet')
-    Adapter::Budgets.stubs(:new).returns(@mockbudgets)
+    @mockbudgets = mock('Services::Budgets')
+    Services::Budgets.stubs(:new).returns(@mockbudgets)
   end
   describe 'get /' do
     before do
-      @mockbudgets.expects(:articles).once.returns('somevalue')
+      @mockbudgets.expects(:all_articles).once.returns('somevalue')
     end
     it 'should return all articles' do
       get '/'

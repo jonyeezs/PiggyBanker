@@ -1,8 +1,9 @@
+require 'google_drive'
 OpenSSL::SSL::VERIFY_PEER &&= OpenSSL::SSL::VERIFY_NONE # FIXME: use SSL
-# #TODO Connects to the database in this case it will be google drive
-module Adapter
-  module Connector
-    class GoogleDrive
+
+module DataMappers
+  module Connectors
+    class GoogleDriveConnector
       def initialize(spreadsheet_key)
         fail ArgumentError if spreadsheet_key.nil?
         config_path = PiggyBanker.root + '/' + PiggyBanker.settings['googledrive_settings']
@@ -12,17 +13,6 @@ module Adapter
 
       def tables
         @spreadsheet.worksheets
-      end
-
-      def create
-      end
-
-      ## @param the values needed to update year, value
-      # then converts it?
-      def update
-      end
-
-      def delete
       end
     end
   end
