@@ -1,5 +1,3 @@
-# Think-about-it: use a factory pattern to differentiate expense and income
-#                 http://katafrakt.me/2015/05/15/when-you-call-object-new/
 require 'lib/common/occurance'
 
 module Model
