@@ -7,8 +7,8 @@ describe DataMappers::Mappers::GoogleDrive do
 
   describe 'map_article' do
     before do
-      DataMappers::Mappers::GoogleDrive::RequestHelper.any_instance.stubs(:year_from_title).returns('year')
-      DataMappers::Mappers::GoogleDrive::RequestHelper.any_instance.stubs(:get_items).returns([])
+      DataMappers::Mappers::GoogleDrive::MapToArticleHelper.any_instance.stubs(:year_from_title).returns('year')
+      DataMappers::Mappers::GoogleDrive::MapToArticleHelper.any_instance.stubs(:get_items).returns([])
       @result = DataMappers::Mappers::GoogleDrive.map_article @worksheet
     end
     it 'should map to article object' do
@@ -17,7 +17,7 @@ describe DataMappers::Mappers::GoogleDrive do
     end
   end
 
-  describe 'Requesthelper' do
+  describe 'MapToArticleHelper' do
     before do
       @num_of_incomes = 1
       @num_of_expenses = 3
@@ -33,7 +33,7 @@ describe DataMappers::Mappers::GoogleDrive do
       @worksheet[9] = ['Grocery', 'Food', 'weekly', '23.50']
       @worksheet[10] =  ['Internet', 'bill', 'monthly', '60.50']
       @worksheet[11] =  ['Movies', 'leisure', 'monthly', '7331.20']
-      @subject_instance = DataMappers::Mappers::GoogleDrive::RequestHelper.new
+      @subject_instance = DataMappers::Mappers::GoogleDrive::MapToArticleHelper.new
     end
     describe 'map_item' do
       it 'should map correctly' do
