@@ -14,8 +14,12 @@ module DataMappers
     def budgets
       raw_budgets = @google_drive.tables.select { |ws| ws.title.downcase.include? 'budget' }
       @budgets = raw_budgets.map do |ws|
-        Mappers::GoogleDrive.map_article ws
+        DataMappers::Mappers::GoogleDrive.map_article ws
       end
+    end
+
+    def update(budget)
+      worksheet = DataMappers::Mappers::GoogleDrive.map_worksheet budget
     end
   end
 end

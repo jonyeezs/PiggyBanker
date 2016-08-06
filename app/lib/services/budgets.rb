@@ -3,8 +3,8 @@ require 'lib/data_mappers/budget'
 module Services
   class Budgets
     def initialize
-      data_mapper = DataMappers::Budget.new
-      @articles = data_mapper.budgets
+      @data_mapper = DataMappers::Budget.new
+      @articles = @data_mapper.budgets
     end
 
     def available_years
@@ -13,6 +13,10 @@ module Services
 
     def all_articles
       @articles
+    end
+
+    def update_article(article)
+      @data_mapper.update article
     end
 
     def by_year(year)

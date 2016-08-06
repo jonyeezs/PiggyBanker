@@ -1,5 +1,6 @@
 require 'models/budget/article'
 require 'models/budget/item'
+require 'lib/data_mappers/connectors/models/google_drive'
 
 module DataMappers
   module Mappers
@@ -11,6 +12,12 @@ module DataMappers
         helper = MapToArticleHelper.new
         year = helper.year_from_title worksheet.title
         Model::Budget::Article.new year, helper.get_items(worksheet)
+      end
+
+      def self.map_worksheet(_article)
+        helper = MapToWorksheetHelper.new
+        # worksheet_title = helper.budget_title_from_year article.year
+        # cell_hashes = helper.get_cells article
       end
 
       class MapToArticleHelper
@@ -90,6 +97,25 @@ module DataMappers
 
         def year_from_title(title)
           title.downcase.delete('budget').delete('actual').strip
+        end
+      end
+
+      class MapToWorksheetHelper
+        def get_worksheet(article)
+          worksheet_title = budget_title_from_year article.year
+          cells_hashes = article.items.map { |item| item_to_cells(item) }
+          DataMappers::Connectors::Model::GoogleDrive::Worksheet.new worksheet_title, cells_hashes
+        end
+
+        def item_to_cells(item)
+          attributes = [:description, :category, :occurance, :amount]
+          attributes.each_with_index.map do |attr, index|
+            DataMappers::Connectors::Model::GoogleDrive::Cell.new item.id, index, item.send(attr)
+          end
+        end
+
+        def budget_title_from_year(year)
+          "Budget #{year}"
         end
       end
     end
