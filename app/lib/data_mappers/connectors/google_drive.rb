@@ -14,6 +14,14 @@ module DataMappers
       def tables
         @spreadsheet.worksheets
       end
+
+      def update(worksheet)
+        updated_worksheet = @spreadsheet.worksheets.find { |ws| ws.title == worksheet.title }
+        worksheet.cells.each do |cell|
+          updated_worksheet[cell.row, cell.column] = cell.value
+        end
+        updated_worksheet.save
+      end
     end
   end
 end

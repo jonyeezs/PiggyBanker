@@ -1,3 +1,5 @@
+# TODO: Maybe move away from the idea of data_mappers that does the relationship.
+#       But make it DTO as the object that mutates the persistent database.
 require_relative './connectors/google_drive'
 require_relative './mappers/google_drive'
 
@@ -20,6 +22,7 @@ module DataMappers
 
     def update(budget)
       worksheet = DataMappers::Mappers::GoogleDrive.map_worksheet budget
+      @google_drive.update worksheet
     end
   end
 end
