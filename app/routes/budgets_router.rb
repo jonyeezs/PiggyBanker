@@ -1,3 +1,4 @@
+# TODO: Actually the years should be in its own uri. And should have a hal link to budgets and budgets could be id-ed by the year.
 require 'lib/services/budgets'
 
 class Budgets < BaseRouter
@@ -16,6 +17,12 @@ class Budgets < BaseRouter
     articles.items = filter_items_by_transaction(articles, params['transaction_type']) if params.key? 'transaction_type'
 
     respond_with items: articles.hashed_items
+  end
+
+  patch '/years/:year' do
+    patch_changes = JSON.parse request.body.read
+    # TODO: would be nice if the parsed data is mapped/bound to our internal models
+    budget.update_article params[:year], patch_changes
   end
 
   def budget

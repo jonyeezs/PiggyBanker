@@ -108,10 +108,19 @@ describe DataMappers::Mappers::GoogleDrive do
 
   describe 'MapToWorksheetHelper' do
     before do
-      @debit_item = Model::Budget::Item.new description: 'debit item', id: 1, category: 'payday',
-                                            occurance: :daily, amount: 4.12
-      @credit_item = Model::Budget::Item.new description: 'credit item', id: 1, category: 'bill',
-                                            occurance: :monthly, amount: -4.12
+      @items = [{
+        'id'          => 1,
+        'description' => 'debit item',
+        'category'    => 'payday',
+        'occurance'   => 'daily',
+        'amount'      => 4.12
+      }, {
+        'id'          => 2,
+        'description' => 'credit item',
+        'category'    => 'bill',
+        'occurance'   => 'monthly',
+        'amount'      => -4.12
+      }]
       @subject_instance = DataMappers::Mappers::GoogleDrive::MapToWorksheetHelper.new
     end
     describe 'budget_title_from_year' do
@@ -120,31 +129,33 @@ describe DataMappers::Mappers::GoogleDrive do
       end
     end
 
-    describe 'item_to_cells' do
-      it 'should convert a debit item into cells' do
-        results = @subject_instance.item_to_cells(@debit_item)
+    describe 'hash_to_cells' do
+      it 'should convert hashes into cells' do
+        results = @subject_instance.hash_to_cells(@items[0])
         results.length.must_equal 4
         results.each do |cell|
           cell.must_be_instance_of DataMappers::Connectors::Model::GoogleDrive::Cell
-          cell.row.must_equal @debit_item.id
+          cell.row.must_equal @items[0]['id']
         end
       end
       it 'should map the item fields to the appropriate column' do
-        results = @subject_instance.item_to_cells(@debit_item)
-        # results.sort! { |x, y| y.column <=> x.column }
-        results[0].value.must_equal @debit_item.description
-        results[1].value.must_equal @debit_item.category
-        results[2].value.must_equal @debit_item.occurance
-        results[3].value.must_equal @debit_item.amount
+        results = @subject_instance.hash_to_cells(@items[0])
+        results[0].value.must_equal @items[0]['description']
+        results[0].column.must_equal 1
+        results[1].value.must_equal @items[0]['category']
+        results[1].column.must_equal 2
+        results[2].value.must_equal @items[0]['occurance']
+        results[2].column.must_equal 3
+        results[3].value.must_equal @items[0]['amount']
+        results[3].column.must_equal 4
       end
     end
 
     describe 'get_worksheet' do
-      before do
-        @article = Model::Budget::Article.new('2016', [@debit_item, @credit_item])
-      end
       it 'should map article to googledrive model' do
-        @subject_instance.get_worksheet(@article).must_be_instance_of DataMappers::Connectors::Model::GoogleDrive::Worksheet
+        result = @subject_instance.get_worksheet 2016, @items
+        result.must_be_instance_of DataMappers::Connectors::Model::GoogleDrive::Worksheet
+        result.cells.length.must_equal 8
       end
     end
   end

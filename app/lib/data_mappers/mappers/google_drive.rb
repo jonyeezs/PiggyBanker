@@ -14,10 +14,9 @@ module DataMappers
         Model::Budget::Article.new year, helper.get_items(worksheet)
       end
 
-      def self.map_worksheet(_article)
+      def self.map_worksheet(year, changes)
         helper = MapToWorksheetHelper.new
-        # worksheet_title = helper.budget_title_from_year article.year
-        # cell_hashes = helper.get_cells article
+        helper.get_worksheet year, changes
       end
 
       class MapToArticleHelper
@@ -101,16 +100,16 @@ module DataMappers
       end
 
       class MapToWorksheetHelper
-        def get_worksheet(article)
-          worksheet_title = budget_title_from_year article.year
-          cells_hashes = article.items.map { |item| item_to_cells(item) }
-          DataMappers::Connectors::Model::GoogleDrive::Worksheet.new worksheet_title, cells_hashes
+        def get_worksheet(year, items)
+          worksheet_title = budget_title_from_year year
+          cells = items.map { |item| hash_to_cells(item) }.flatten
+          DataMappers::Connectors::Model::GoogleDrive::Worksheet.new worksheet_title, cells
         end
 
-        def item_to_cells(item)
-          attributes = [:description, :category, :occurance, :amount]
+        def hash_to_cells(item)
+          attributes = %w(description category occurance amount)
           attributes.each_with_index.map do |attr, index|
-            DataMappers::Connectors::Model::GoogleDrive::Cell.new item.id, index, item.send(attr)
+            DataMappers::Connectors::Model::GoogleDrive::Cell.new item['id'], index + 1, item[attr]
           end
         end
 

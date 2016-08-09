@@ -15,8 +15,8 @@ module Services
       @articles
     end
 
-    def update_article(article)
-      @data_mapper.update article
+    def update_article(year, patch_changes)
+      @data_mapper.update year, patch_changes
     end
 
     def by_year(year)

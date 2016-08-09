@@ -20,8 +20,8 @@ module DataMappers
       end
     end
 
-    def update(budget)
-      worksheet = DataMappers::Mappers::GoogleDrive.map_worksheet budget
+    def update(year, patch_changes)
+      worksheet = DataMappers::Mappers::GoogleDrive.map_worksheet year, patch_changes
       @google_drive.update worksheet
     end
   end
