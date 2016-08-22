@@ -15,6 +15,13 @@ class BaseRouter < Sinatra::Base
     # erb :error # FIXME: how to stub erb
   end
 
+  options '*' do
+    response.headers['Access-Control-Allow-Methods'] = 'GET, PATCH, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
+
+    200
+  end
+
   def respond_with(content = nil)
     content_type :json
     response = {
