@@ -25,6 +25,11 @@ class Budgets < BaseRouter
     budget.update_article params[:year], patch_changes
   end
 
+  post '/years/:year' do
+    item = JSON.parse request.body.read
+    budget.add_item params[:year], item
+  end
+
   def budget
     Services::Budgets.new
   end

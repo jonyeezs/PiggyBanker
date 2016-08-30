@@ -19,6 +19,13 @@ module DataMappers
         helper.get_worksheet year, changes
       end
 
+      def self.map_worksheet_with_new_cells(article, item)
+        items = item['amount'].to_i > 0 ? article.debit_items : article.credit_items
+        last_item = items.reduce { |a, e| e.id > a.id ? e : a }
+        item['id'] = last_item.id # NOTE the add row method is implemented by shifting all cells below the row
+        MapToWorksheetHelper.new.get_worksheet article.year, [item]
+      end
+
       class MapToArticleHelper
         def get_items(ws)
           expenses = map_expenses ws
@@ -109,6 +116,7 @@ module DataMappers
         def hash_to_cells(item)
           attributes = %w(description category occurance amount)
           attributes.each_with_index.map do |attr, index|
+            item[attr] = (item[attr]).to_i.abs if attr == 'amount'
             DataMappers::Connectors::Model::GoogleDrive::Cell.new item['id'], index + 1, item[attr]
           end
         end

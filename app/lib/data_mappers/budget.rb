@@ -24,5 +24,10 @@ module DataMappers
       worksheet = DataMappers::Mappers::GoogleDrive.map_worksheet year, patch_changes
       @google_drive.update worksheet
     end
+
+    def add(article, item)
+      worksheet = DataMappers::Mappers::GoogleDrive.map_worksheet_with_new_cells article, item
+      @google_drive.add_row worksheet
+    end
   end
 end

@@ -17,10 +17,22 @@ module DataMappers
 
       def update(worksheet)
         updated_worksheet = @spreadsheet.worksheets.find { |ws| ws.title == worksheet.title }
-        worksheet.cells.each do |cell|
-          updated_worksheet[cell.row, cell.column] = cell.value
+        update_row updated_worksheet, worksheet
+      end
+
+      def add_row(worksheet)
+        updated_worksheet = @spreadsheet.worksheets.find { |ws| ws.title == worksheet.title }
+        updated_worksheet.insert_rows worksheet.cells[0].row, 1
+        update_row updated_worksheet, worksheet
+      end
+
+      private
+
+      def update_row(worksheet_to_be_updated, worksheet_with_updates)
+        worksheet_with_updates.cells.each do |cell|
+          worksheet_to_be_updated[cell.row, cell.column] = cell.value
         end
-        updated_worksheet.save
+        worksheet_to_be_updated.save
       end
     end
   end

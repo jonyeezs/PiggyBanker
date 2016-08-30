@@ -19,6 +19,11 @@ module Services
       @data_mapper.update year, patch_changes
     end
 
+    def add_item(year, item)
+      article = by_year(year)
+      @data_mapper.add article, item
+    end
+
     def by_year(year)
       @articles.find { |article| article.year == year }
     end
