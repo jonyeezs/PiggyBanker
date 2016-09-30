@@ -30,4 +30,19 @@ describe Model::Budget::Article do
       end
     end
   end
+
+  describe 'change_occurances' do
+    before do
+      @debit_item = Model::Budget::Item.new id: 1, occurance: :monthly, amount: 4
+      credit_item = Model::Budget::Item.new id: 2, occurance: :daily, amount: (-2)
+      items = [@debit_item, credit_item, credit_item]
+      @subject = Model::Budget::Article.new '2016', items
+    end
+    it 'should not mutate the subject' do
+      expected_result_item = Model::Budget::Item.new id: 1, occurance: :annually, amount: 48
+      results = @subject.change_occurances :annually
+      results.must_include expected_result_item
+      @subject.items.must_include @debit_item
+    end
+  end
 end

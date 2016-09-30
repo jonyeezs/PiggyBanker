@@ -13,7 +13,7 @@ class Budgets < BaseRouter
   get '/years/:year' do
     articles = budget.by_year params[:year]
     # queries
-    articles.change_occurances! params['occurance'] if params.key? 'occurance'
+    articles.change_occurances params['occurance'] if params.key? 'occurance'
     articles.items = filter_items_by_transaction(articles, params['transaction_type']) if params.key? 'transaction_type'
 
     respond_with items: articles.hashed_items

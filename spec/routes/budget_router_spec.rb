@@ -45,7 +45,7 @@ describe 'budgets router' do
       assert last_response.body.include? 'items'
     end
     it 'should take in query for occurance' do
-      @mock_articles.expects(:change_occurances!).once.with 'century'
+      @mock_articles.expects(:change_occurances).once.with 'century'
       get "/years/#{@expected_year}", occurance: 'century'
     end
     it 'should take in query for transaction_type of debit' do

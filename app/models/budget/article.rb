@@ -17,8 +17,11 @@ module Model
         @items.map(&:to_h)
       end
 
-      def change_occurances!(occurance_type)
-        @items.each { |item| item.occurance = occurance_type }
+      def change_occurances(occurance_type)
+        @items.map do |item|
+          item.occurance = occurance_type
+          item
+        end
       end
 
       def debit_items
