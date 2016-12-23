@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Services::Budgets do
+describe Services::Repository do
   before do
     data_mapper = Object.new
-    data_mapper.stubs(:budgets).returns(
+    data_mapper.stubs(:articles).returns(
       [
         stub(year: '2016'),
         stub(year: '2017')
       ])
     DataMappers::Budget.stubs(:new).returns(data_mapper)
-    @subject = Services::Budgets.new
+    @subject = Services::Repository.new DataMappers::Budget.new
   end
 
   it 'should initialize with elements in articles' do

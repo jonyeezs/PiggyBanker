@@ -13,7 +13,7 @@ module DataMappers
       @google_drive = DataMappers::Connectors::GoogleDriveConnector.new PiggyBanker.settings['spreadsheet_key']
     end
 
-    def budgets
+    def articles
       raw_budgets = @google_drive.tables.select { |ws| ws.title.downcase.include? 'budget' }
       @budgets = raw_budgets.map do |ws|
         DataMappers::Mappers::GoogleDrive.map_article ws

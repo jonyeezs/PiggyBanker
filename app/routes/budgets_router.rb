@@ -1,5 +1,6 @@
 # TODO: Actually the years should be in its own uri. And should have a hal link to budgets and budgets could be id-ed by the year.
-require 'lib/services/budgets'
+require 'lib/services/repository'
+require 'lib/data_mappers/budget'
 
 class Budgets < BaseRouter
   get '/' do
@@ -10,10 +11,16 @@ class Budgets < BaseRouter
     respond_with years: budget.available_years
   end
 
+  get '/categories/:year' do
+    articles = budget.by_year params[:year]
+    categories = articles.items.map(&:category).uniq
+    respond_with categories: categories
+  end
+
   get '/years/:year' do
     articles = budget.by_year params[:year]
     # queries
-    articles.change_occurances params['occurance'] if params.key? 'occurance'
+    articles.change_occurances! params['occurance'] if params.key? 'occurance'
     articles.items = filter_items_by_transaction(articles, params['transaction_type']) if params.key? 'transaction_type'
 
     respond_with items: articles.hashed_items
@@ -31,7 +38,7 @@ class Budgets < BaseRouter
   end
 
   def budget
-    Services::Budgets.new
+    Services::Repository.new DataMappers::Budget.new
   end
 
   def filter_items_by_transaction(articles, transaction)

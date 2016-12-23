@@ -23,7 +23,7 @@ describe DataMappers::Budget do
   describe 'budgets' do
     it 'should only look for tables with budget in title' do
       # FIXME: mock(DataMappers::Mappers::GoogleDrive).expects(:map_article).at_most_once
-      @subject.budgets
+      @subject.articles
     end
   end
 end

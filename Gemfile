@@ -8,13 +8,14 @@ gem 'thin'
 gem 'activesupport', '~> 4.2', '>= 4.2.5', require: 'active_support/all'
 gem 'json'
 gem 'google_drive', '~> 1.0.6'
+gem 'pg', '~> 0.18.4'
 
 # TODO: look into a debugging tool
 group :development do
   gem 'sinatra-contrib'
   gem 'wdm', '>= 0.1.0' if Gem.win_platform?
-  # gem 'guard'
-  # gem 'guard-rack'
+  gem 'guard'
+  gem 'guard-rack'
   # gem 'rerun' works only on Unix
 end
 

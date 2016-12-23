@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'routes/budgets_router'
-require 'models/budget/article'
+require 'models/article'
 include Rack::Test::Methods
 
 def app
@@ -9,8 +9,8 @@ end
 
 describe 'budgets router' do
   before do
-    @mockbudgets = mock('Services::Budgets')
-    Services::Budgets.stubs(:new).returns(@mockbudgets)
+    @mockbudgets = mock('Services::Repository')
+    Services::Repository.stubs(:new).returns(@mockbudgets)
   end
   describe 'get /' do
     before do
@@ -35,7 +35,7 @@ describe 'budgets router' do
   describe 'get /years/{value}' do
     before do
       @expected_year = '2016'
-      @mock_articles = stub_everything('Model::Budget::Article') # so we don't have to stub 'budget.items = ...'
+      @mock_articles = stub_everything('Model::Article') # so we don't have to stub 'budget.items = ...'
       @mock_articles.expects(:hashed_items).returns('array_of_hashes')
       @mockbudgets.expects(:by_year).with(@expected_year).returns(@mock_articles)
     end

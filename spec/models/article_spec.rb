@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'models/budget/article'
+require 'models/article'
 require 'models/budget/item'
 
-describe Model::Budget::Article do
+describe Model::Article do
   before do
-    @subject = Model::Budget::Article.new '2016'
+    @subject = Model::Article.new '2016'
   end
 
   it 'should create an article successfully' do
@@ -17,7 +17,7 @@ describe Model::Budget::Article do
       debit_item = Model::Budget::Item.new id: 1, amount: 4
       credit_item = Model::Budget::Item.new id: 2, amount: (-2)
       items = [debit_item, debit_item, credit_item]
-      @subject = Model::Budget::Article.new '2016', items
+      @subject = Model::Article.new '2016', items
     end
     describe 'find_all_debit' do
       it 'should return 2 items' do

@@ -14,7 +14,7 @@ describe DataMappers::Mappers::GoogleDrive do
     end
     it 'should map to article object' do
       @result.year.must_equal 'year'
-      assert @result.is_a? Model::Budget::Article
+      assert @result.is_a? Model::Article
     end
   end
   describe 'map_worksheet_with_new_cells' do
@@ -27,7 +27,7 @@ describe DataMappers::Mappers::GoogleDrive do
                                   occurance: :daily, amount: (-2.00)
       credit_item2 = Model::Budget::Item.new description: 'credit item2', id: 16,
                                   occurance: :daily, amount: (-3.33)
-      @article = Model::Budget::Article.new '2016', [debit_item, credit_item, debit_item2, credit_item2]
+      @article = Model::Article.new '2016', [debit_item, credit_item, debit_item2, credit_item2]
     end
 
     it 'should map an article to a worksheet with cells populated for a new debit item' do

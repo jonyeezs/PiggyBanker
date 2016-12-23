@@ -1,4 +1,4 @@
-require 'models/budget/article'
+require 'models/article'
 require 'models/budget/item'
 require 'lib/data_mappers/connectors/models/google_drive'
 
@@ -11,7 +11,7 @@ module DataMappers
       def self.map_article(worksheet)
         helper = MapToArticleHelper.new
         year = helper.year_from_title worksheet.title
-        Model::Budget::Article.new year, helper.get_items(worksheet)
+        Model::Article.new year, helper.get_items(worksheet)
       end
 
       def self.map_worksheet(year, changes)

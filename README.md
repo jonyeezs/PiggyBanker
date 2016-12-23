@@ -8,7 +8,6 @@ This will be an educational experiment for me to learn Ruby and at the same time
 
 So expect to see lots of fyi/reference-type comments for educational knowledge.
 
-
 ## What's involved
 
 This is a ruby API service using Sinatra as the base.
@@ -37,6 +36,8 @@ Using [Guard](https://github.com/guard/guard) for in-process automated re-launch
 
 ## The Database
 
+### Budget
+
 The database is a spreadsheet on google docs, formatted by preference of my SO.
 So that's the limitation I have to work with but that's fine with me.
 
@@ -47,3 +48,28 @@ Note: the amounts should be in pure numeric text.
 This is the, strict, spreadsheet layout
 
 ![](spreadsheet_example_for_readme.png)
+
+### Ledger
+
+Using a posgres DB. Below is the query to build the database:
+```
+CREATE SEQUENCE ledger_id_seq;
+-- Table: public.ledger
+
+-- DROP TABLE public.ledger;
+
+CREATE TABLE public.ledger
+(
+  id integer DEFAULT NEXTVAL('ledger_id_seq'),
+  description character varying NOT NULL,
+  category character varying NOT NULL,
+  date date NOT NULL DEFAULT ('now'::text)::date,
+  amount money NOT NULL,
+  year integer NOT NULL DEFAULT to_number(to_char((('now'::text)::date)::timestamp with time zone, 'YYYY'::text), '4'::text)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.ledger
+  OWNER TO postgres;
+```
