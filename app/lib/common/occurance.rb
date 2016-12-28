@@ -45,8 +45,10 @@ module Common
       fail ArgumentError, ERROR_MSG unless new_occurance.instance_of?(Common::Occurance)
       if new_occurance.index > index
         proc_buildup_price(new_occurance)
-      else
+      elsif new_occurance.index < index
         proc_breakdown_price(new_occurance)
+      else
+        proc { |price| price.round }
       end
     end
 
