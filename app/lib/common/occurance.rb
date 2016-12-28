@@ -2,6 +2,9 @@ module Common
   module Occurances
     # NOTE: values are all in ratio to a single day
     #       occurances must be in lowercase
+    # TODO: using own ratio is not entirely accurate.
+    #       Will need to rethink how to calculate this.
+    #       This will have dependency on summarizer.
     LIST =
       [
         { name: 'daily',       ratio: 1 },
@@ -17,8 +20,21 @@ module Common
       LIST
     end
 
+    def self.get_index(occurance)
+      LIST.index { |this| this[:name] == occurance }
+    end
+
+    def self.get_ratio(occurance)
+      index = get_index occurance
+      Occurances.list[index][:ratio]
+    end
+
     def self.to_s
-      Occurances.list.map { |e| e[:name] }.to_sentence
+      to_a.to_sentence
+    end
+
+    def self.to_a
+      Occurances.list.map { |e| e[:name] }
     end
   end
 
@@ -34,11 +50,11 @@ module Common
     end
 
     def index
-      Occurances.list.index { |this| compare_name(this) }
+      Occurances.get_index @occurance
     end
 
     def ratio
-      Occurances.list[index][:ratio]
+      Occurances.get_ratio @occurance
     end
 
     def generate_price_conversion(new_occurance)
@@ -67,11 +83,7 @@ module Common
     end
 
     def exist?
-      Occurances::LIST.any? { |this| compare_name(this) }
-    end
-
-    def compare_name(occurance)
-      occurance[:name] == @occurance
+      Occurances::LIST.any? { |this| this[:name] == @occurance }
     end
 
     def proc_buildup_price(higher_occurance)

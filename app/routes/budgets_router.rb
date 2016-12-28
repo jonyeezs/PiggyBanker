@@ -1,6 +1,7 @@
 # TODO: Actually the years should be in its own uri. And should have a hal link to budgets and budgets could be id-ed by the year.
 require 'lib/services/repository'
 require 'lib/data_mappers/budget'
+require 'lib/services/summarizer'
 
 class Budgets < BaseRouter
   get '/' do
@@ -9,6 +10,13 @@ class Budgets < BaseRouter
 
   get '/years' do
     respond_with years: budget.available_years
+  end
+
+  get '/years/:year/summary' do
+    articles = budget.by_year params[:year]
+    summarizer = Services::Summarizer.new articles
+    summary = summarizer.map_budget params['occurance'], params['as_statement']
+    respond_with summary: summary
   end
 
   get '/categories/:year' do
