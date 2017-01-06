@@ -16,7 +16,7 @@ class Budgets < BaseRouter
     articles = budget.by_year params[:year]
     summarizer = Services::Summarizer.new articles
     summary = summarizer.map_budget params['occurance'], params['as_statement']
-    respond_with summary: summary
+    respond_with summary: summary.to_class
   end
 
   get '/categories/:year' do
