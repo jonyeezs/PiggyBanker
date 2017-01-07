@@ -1,6 +1,6 @@
 # FIXME: This shouldn't be mapping to an item type. but a generic one
 require 'models/article'
-require 'models/ledger/item'
+require 'models/actual/item'
 require 'lib/data_mappers/connectors/models/postgres'
 
 module DataMappers
@@ -37,7 +37,7 @@ module DataMappers
 
       # map a row in a worksheeet into an item
       def map_item(row)
-        Model::Ledger::Item.new id:          row['id'],
+        Model::Actual::Item.new id:          row['id'],
                                 description: row['description'],
                                 date:        row['date'],
                                 amount:      row['amount'],

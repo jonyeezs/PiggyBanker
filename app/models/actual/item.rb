@@ -1,6 +1,6 @@
 # TODO: use inheritance
 module Model
-  module Ledger
+  module Actual
     class Item
       attr_accessor :description, :category, :amount, :date
       attr_reader :id

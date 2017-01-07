@@ -2,7 +2,7 @@ require_relative './connectors/postgres'
 require_relative './mappers/postgres'
 
 module DataMappers
-  class Ledger
+  class Actual
     ## Should get a model
     def initialize
       @postgres = DataMappers::Connectors::PostgresConnector.new 'ledger'

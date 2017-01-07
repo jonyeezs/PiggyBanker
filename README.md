@@ -49,7 +49,7 @@ This is the, strict, spreadsheet layout
 
 ![](spreadsheet_example_for_readme.png)
 
-### Ledger
+### Actual / Ledger
 
 Using a posgres DB. Below is the query to build the database:
 ```
