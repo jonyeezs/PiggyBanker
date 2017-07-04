@@ -48,8 +48,8 @@ module Services
       occur_types = Common::Occurances
 
       occurances.each_with_object({}) do |(occurance, total), hash|
-        day_count = (days / occur_types.get_ratio(occurance)).floor
-        hash[occurance] = (total * day_count)
+        day_count = days.fdiv occur_types.get_ratio(occurance)
+        hash[occurance] = (total * day_count).round(2)
       end
     end
   end
